@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Car_Picker_API.Helpers
 {
-    public class HashingHelper
+    public static class HashingHelper
     {
+
         public static string HashValueWith384(string inputValue)
         {
             //convert string to bytes array
