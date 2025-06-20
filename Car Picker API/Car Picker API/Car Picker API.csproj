@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Helpers\Enums\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
     <Folder Include="DTOs\" />
