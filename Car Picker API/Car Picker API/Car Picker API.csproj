@@ -26,8 +26,6 @@
     <Folder Include="Helpers\Enums\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
-    <Folder Include="Context\" />
-    <Folder Include="Entities\" />
     <Folder Include="DTOs\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
