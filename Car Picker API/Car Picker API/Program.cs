@@ -1,3 +1,6 @@
+using CarPicker_API.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//DB Context configuration injection
+builder.Services.AddDbContext<CarPickerDbContext>(options =>
+options.UseSqlServer("Data Source=DESKTOP-FB86LSD\\SQLSERVER;Initial Catalog=Sayarti_API_Db;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+
+// injected Classes and Interfaces configuration
+//builder.Services.AddScoped<ILookupInterface, LookupAppService>();//<the injected interface, the class that implenents the injected interface> //and thats how we configure the dependency injection for the interface and the class that implements it
+
 
 var app = builder.Build();
 
