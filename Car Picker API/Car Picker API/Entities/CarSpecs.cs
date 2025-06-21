@@ -8,11 +8,17 @@ namespace Car_Picker_API.Entities
         public string EngineType { get; set; } // Engine type (e.g., "Petrol V6", "Electric", "Diesel")
         public float EngineCapacity { get; set; } // Engine capacity in liters (e.g., 2.0, 3.5)
         public short HorsePower { get; set; } // int not null
-        public TransmissionType TransmissionType { get; set; } 
+        public TransmissionType TransmissionType { get; set; }
         public float performanceScore { get; set; } // Performance rating (e.g., 0-100 scale)
         public FuelType FuelType { get; set; } // nvarchar(max) not null
         public short SeatingCapacity { get; set; } // int not null
+
+        // Foreign Key
         public int CarId { get; set; } // Foreign Key to Car entity
+
+        // Navigation properties
+        public Car Car { get; set; } // Navigation property to the Car entity
+
     }
-    
+
 }
