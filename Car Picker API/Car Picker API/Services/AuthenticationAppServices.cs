@@ -38,9 +38,12 @@
 
             public async Task<string> SignIn(SignInputDTO input)
             {
-                var originalUserName = input.Username;
-                input.Username = HashingHelper.HashValueWith384(input.Username);
-                var user = _context.Users.Where(u => (u.Email == input.Username || u.Username == input.Username) && u.Password == input.Password && u.IsLoggedIn == false).SingleOrDefault();
+                if (string.IsNullOrWhiteSpace(input.PhoneNumber) || string.IsNullOrWhiteSpace(input.Password))
+                    return ("PhoneNumber and Password are required");
+
+                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.Password == input.Password && u.IsLoggedIn == false).SingleOrDefault();
+
+     
                 if (user == null)
                 {
                     return "User not found";
@@ -51,7 +54,7 @@
                 user.OTPCode = otp.ToString();
 
                 user.OTPExpiry = DateTime.Now.AddMinutes(5);
-                await MailingHelper.SendEmail(originalUserName, user.OTPCode, "Sign In OTP", "Complete Sign In Operation");
+                await MailingHelper.SendEmail(input.PhoneNumber, user.OTPCode, "Sign In OTP", "Complete Sign In Operation");
 
                 _context.Update(user);
                 _context.SaveChanges();
