@@ -4,5 +4,8 @@
     {
         public int OfficeId { get; set; } // Foreign Key to Office entity
         public string ImagePath { get; set; } // Path/URL of the office image
+
+        // Navigation property
+        public Office Office { get; set; } // Navigation property to the Office entity
     }
 }

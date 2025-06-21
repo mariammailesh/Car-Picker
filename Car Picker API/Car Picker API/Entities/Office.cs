@@ -12,5 +12,11 @@ namespace Car_Picker_API.Entities
         public string OfficeEmail { get; set; } // Email address of the office
         public string OfficeDescription { get; set; } // Description of the office
 
+        // Navigation properties
+        public ICollection<Car> Cars { get; set; } // Navigation property to Cars
+        public ICollection<Reservation> Reservations { get; set; } // Navigation property to Reservations
+        public ICollection<OfficeImage> OfficeImages { get; set; } // Navigation property to OfficeImages
+        public ICollection<OfficeReview> OfficeReviews { get; set; } // Navigation property to OfficeReviews
+
     }
 }

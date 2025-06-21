@@ -2,6 +2,7 @@ using Car_Picker_API.Interfaces;
 using Car_Picker_API.Services.Car_Picker_API.Servicess;
 using CarPicker_API.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 //DB Context configuration injection
 builder.Services.AddDbContext<CarPickerDbContext>(options =>
-options.UseSqlServer("Data Source=DESKTOP-FB86LSD\\SQLSERVER;Initial Catalog=Sayarti_API_Db;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+options.UseSqlServer("Data Source=DESKTOP-FB86LSD\\SQLSERVER;Initial Catalog=CarPickerDb;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
 
 
 

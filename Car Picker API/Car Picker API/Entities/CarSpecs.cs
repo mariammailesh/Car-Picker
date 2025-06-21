@@ -1,4 +1,5 @@
-﻿using Car_Picker_API.Helpers.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Car_Picker_API.Helpers.Enums;
 
 namespace Car_Picker_API.Entities
 {
@@ -12,7 +13,12 @@ namespace Car_Picker_API.Entities
         public float performanceScore { get; set; } // Performance rating (e.g., 0-100 scale)
         public FuelType FuelType { get; set; } // nvarchar(max) not null
         public short SeatingCapacity { get; set; } // int not null
+
+        [ForeignKey("Car")]
         public int CarId { get; set; } // Foreign Key to Car entity
+
+        // Navigation properties
+        public Car Car { get; set; } // Navigation property to the Car entity
     }
-    
+
 }

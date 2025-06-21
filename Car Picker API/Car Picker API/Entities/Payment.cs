@@ -10,6 +10,10 @@ namespace Car_Picker_API.Entities
         public string? TransactionId { get; set; } // Unique identifier for the transaction
         public PaymentMethod PaymentMethod { get; set; }
         public int ReservationId { get; set; }// Foreign Key to RentalReservation table
+        public int UserId { get; set; }
 
+        /// Navigation properties
+        public Reservation Reservation { get; set; } // Navigation property to the Reservation entity
+        public User User { get; set; } // Navigation property to the User entity
     }
 }

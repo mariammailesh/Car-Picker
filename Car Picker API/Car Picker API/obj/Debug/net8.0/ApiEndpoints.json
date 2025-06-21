@@ -1,0 +1,50 @@
+[
+  {
+    "ContainingType": "Car_Picker_API.Controllers.AuthenticationController",
+    "Method": "SendOTP",
+    "RelativePath": "api/Authentication/SendOTP",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Car_Picker_API.Controllers.AuthenticationController",
+    "Method": "SignIn",
+    "RelativePath": "api/Authentication/SignIn",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "Car_Picker_API.DTOs.SignInputDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Car_Picker_API.Controllers.AuthenticationController",
+    "Method": "SignOut",
+    "RelativePath": "api/Authentication/SignOut",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

@@ -15,9 +15,15 @@ namespace Car_Picker_API.Entities
         public float? SalePrice { get; set; } // float nullable
         public CarPurpose CarPurpose { get; set; } // Enum for CarPurpose
         public string? Description { get; set; } // nvarchar(max) nullable
-        public int CarSpecsId { get; set; } // Foreign Key to CarSpecs table
         public int OfficeId { get; set; } // Foreign Key to Office table
-        
+
+        // Navigation properties
+        public ICollection<CarReview> CarReviews { get; set; } // Navigation property to CarReviews
+        public ICollection<Reservation> Reservations { get; set; } // Navigation property to Reservations
+        public CarSpecs CarSpecs { get; set; } // Navigation property to CarSpecs entity
+        public ICollection<CarImage> CarImages { get; set; } // Navigation property to CarImages
+        public Office Office { get; set; } // Navigation property to Office entity
+
 
     }
 }
