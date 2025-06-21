@@ -8,5 +8,10 @@ namespace Car_Picker_API.Interfaces
         Task<bool> SendOTP(string email);
 
         Task<bool> SignOut(int userId);
+
+        Task<string> SignUp(SignUpDTO input);
+        Task<string> Verification(VerificationDTO input);
+
+        Task<bool> ResetPassword(ResetPasswordDTO input);
     }
 }

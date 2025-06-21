@@ -2,6 +2,7 @@
 {
     using CarPicker_API.Context;
     using global::Car_Picker_API.DTOs;
+    using global::Car_Picker_API.Entities;
     using global::Car_Picker_API.Helpers;
     using global::Car_Picker_API.Interfaces;
 
@@ -74,7 +75,132 @@
                 return true;
             }
 
+            public async Task<string> SignUp(SignUpDTO input)
+            {
+                if (!ValidationHelper.ISValidFullName(input.FullName) ||
+                    !ValidationHelper.IsValidDateOfBirth(input.DateOfBirth) ||
+                    !ValidationHelper.IsValidPhoneNumber(input.PhoneNumber) ||
+                    !ValidationHelper.IsValidPassword(input.Password))
+                {
 
+                    return "Invalid input data.";
+                }
+
+
+                if (_context.Users.Any(u => u.PhoneNumber == input.PhoneNumber))
+                {
+                    return "Phone Number already exists.";
+                }
+
+                // Save images
+                var carLicensePath = await SaveFileToFolder(input.DrivingLicenseFrontImagePath, "CarLicenses");
+                var idImagePath = await SaveFileToFolder(input.NationalIDFrontImagePath, "IdImages");
+
+                User user = new User
+                {
+                    FullName = input.FullName,
+                    Password = HashingHelper.HashValueWith384(input.Password),
+                    PhoneNumber = input.PhoneNumber,
+                    DateOfBirth = input.DateOfBirth,
+                    Gender = input.Gender,
+                    CreatedBy = "System",
+                    UpdatedBy = "System",
+                    CreationDate = DateTime.Now,
+                    IsVerified = false,
+                    IsActive = true,
+                    RoleId = 3,
+                    OTPCode = new Random().Next(11111, 99999).ToString(),
+                    OTPExpiry = DateTime.Now.AddMinutes(5),
+                    DrivingLicenseFrontImagePath = input.DrivingLicenseFrontImagePath,
+                    DrivingLicenseBackImagePath = input.DrivingLicenseBackImagePath,
+                    NationalIDFrontImagePath = input.NationalIDFrontImagePath,
+                    NationalIDBackImagePath = input.NationalIDBackImagePath,
+                    
+                };
+                await MailingHelper.SendEmail(input.PhoneNumber, user.OTPCode, "Sign Up  OTP", "Complete Sign Up Operation");
+
+                _context.Users.Add(user);
+
+                await _context.SaveChangesAsync();
+
+                return "Please verify your Phone Number using the OTP sent.";
+            }
+
+            public async Task<string> Verification(VerificationDTO input)
+            {
+                if (string.IsNullOrWhiteSpace(input.PhoneNumber) || string.IsNullOrWhiteSpace(input.OTPCode))
+                    return ("Email and OTP code are required.");
+
+                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.Otpcode == input.OTPCode
+                && u.IsLogedIn == false && u.Otpexpiry > DateTime.Now).SingleOrDefault();
+
+                if (user == null)
+                {
+                    return "User not found";
+                }
+                if (input.IsSignup)
+                {
+
+                    user.IsVerified = true;
+                    user.Otpexpiry = null;
+                    user.Otpcode = null;
+                    _context.Update(user);
+                    _context.SaveChanges();
+                    return "Your Account Is Verifyed";
+                }
+                else
+                {
+                    user.LastLoginTime = DateTime.Now;
+                    user.IsLogedIn = true;
+                    user.Otpexpiry = null;
+                    user.Otpcode = null;
+
+                    _context.Update(user);
+                    _context.SaveChanges();
+                    var response = TokenHelper.GenerateJWTToken(user.Id.ToString(), "Client");
+                    return response;
+
+                }
+
+            }
+
+            public async Task<bool> ResetPassword(ResetPasswordDTO input)
+            {
+                if (input == null || string.IsNullOrWhiteSpace(input.PhoneNumber)
+             || string.IsNullOrWhiteSpace(input.Password)
+             || string.IsNullOrWhiteSpace(input.ConfirmPassword)
+             || string.IsNullOrWhiteSpace(input.OTPCode))
+
+                {
+                    return false;
+
+                }
+
+                if (!ValidationHelper.IsValidPhoneNumber(input.PhoneNumber))
+                {
+                    return false;
+                }
+
+                var user = _context.Users.Where(u => u.Email == input.PhoneNumber && u.Otpcode == input.OTPCode
+                && u.IsLogedIn == false && u.Otpexpiry > DateTime.Now).SingleOrDefault();
+
+                if (user == null)
+                {
+                    return false;
+                }
+                if (input.Password != input.ConfirmPassword)
+                {
+                    return false;
+                }
+                user.Password = input.ConfirmPassword;
+                user.Otpcode = null;
+                user.Otpexpiry = null;
+
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
         }
     }
 
