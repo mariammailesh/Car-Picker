@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Source\\Repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj": {}
+    "C:\\Users\\USER\\source\\repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Source\\Repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj": {
+    "C:\\Users\\USER\\source\\repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Source\\Repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\source\\repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj",
         "projectName": "Car Picker API",
-        "projectPath": "C:\\Users\\USER\\Source\\Repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj",
+        "projectPath": "C:\\Users\\USER\\source\\repos\\Car-Picker\\Car Picker API\\Car Picker API\\Car Picker API.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\USER\\Source\\Repos\\Car-Picker\\Car Picker API\\Car Picker API\\obj\\",
         "projectStyle": "PackageReference",

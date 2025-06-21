@@ -16,40 +16,18 @@
             return true;
         }
 
-        public static bool IsValidEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                throw new Exception("Email Is  Required");
-
-            int atIndex = email.IndexOf('@');
-            int dotIndex = email.LastIndexOf('.');
-
-            if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex >= email.Length - 2)
-                throw new Exception("Email Is  Required");
-
-            string domain = email.Substring(atIndex + 1, dotIndex - atIndex - 1);
-            string extension = email.Substring(dotIndex + 1);
-
-            if (domain.Length < 2 || extension.Length < 2)
-                throw new Exception("Email Is  Required");
-
-            foreach (char c in email.Substring(0, atIndex))
-            {
-                if (!char.IsLetterOrDigit(c) && c != '.' && c != '_' && c != '%' && c != '+' && c != '-')
-                    throw new Exception("Email Is  Required");
-            }
-            return true;
-        }
         public static bool IsValidDateOfBirth(DateOnly birth)
         {
             if (birth == default)
                 return false;
 
-            if (birth > DateOnly.Today)
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+
+            if (birth > today)
                 return false;
 
-            int age = DateOnly.Today.Year - birth.Year;
-            if (birth > DateOnly.Today.AddYears(-age)) age--;
+            int age = today.Year - birth.Year;
+            if (birth > today.AddYears(-age)) age--;
 
             if (age < 18)
                 return false;

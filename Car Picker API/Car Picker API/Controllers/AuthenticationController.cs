@@ -60,7 +60,7 @@ namespace Car_Picker_API.Controllers
 
         [HttpPost("[action]")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> SignUp([FromBody] SignUpDTO input)
+        public async Task<IActionResult> SignUp([FromForm] SignUpDTO input)
         {
             try
             {

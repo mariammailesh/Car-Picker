@@ -4,7 +4,10 @@
     {
         public static async Task<string> SaveFileToFolder(IFormFile file, string folderName)
         {
-            string uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Upload", folderName);
+            if (file == null || file.Length == 0)
+                throw new ArgumentException("Invalid file.");
+
+            string uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", folderName);
 
             if (!Directory.Exists(uploadsPath))
                 Directory.CreateDirectory(uploadsPath);
@@ -17,7 +20,7 @@
                 await file.CopyToAsync(stream);
             }
 
-            return $"/Upload/{folderName}/{fileName}";
+            return $"/uploads/{folderName}/{fileName}";
         }
     }
 }
