@@ -113,7 +113,7 @@
                     CreationDate = DateTime.Now,
                     IsVerified = false,
                     IsActive = true,
-                    RoleId = 3,
+                    RoleId = Helpers.Enums.Role.Client,
                     OTPCode = new Random().Next(11111, 99999).ToString(),
                     OTPExpiry = DateTime.Now.AddMinutes(5)
                   
@@ -133,7 +133,7 @@
                     return ("PhoneNumber and OTP code are required.");
 
                 var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.OTPCode == input.OTPCode
-                && u.IsLogedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
+                && u.IsLoggedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
 
                 if (user == null)
                 {
@@ -152,7 +152,7 @@
                 else
                 {
                     user.LastLoginTime = DateTime.Now;
-                    user.IsLogedIn = true;
+                    user.IsLoggedIn = true;
                     user.OTPExpiry = null;
                     user.OTPCode = null;
 
@@ -183,7 +183,7 @@
                 }
 
                 var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.OTPCode == input.OTPCode
-                && u.IsLogedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
+                && u.IsLoggedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
 
                 if (user == null)
                 {
