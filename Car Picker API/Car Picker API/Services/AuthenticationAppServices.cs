@@ -92,9 +92,10 @@
                     return "Phone Number already exists.";
                 }
 
-                // Save images
-                var carLicensePath = await SaveFileToFolder(input.DrivingLicenseFrontImagePath, "CarLicenses");
-                var idImagePath = await SaveFileToFolder(input.NationalIDFrontImagePath, "IdImages");
+                var drivingLicenseFrontPath = await SavingHelper.SaveFileToFolder(input.DrivingLicenseFrontImage, "CarLicenses");
+                var drivingLicenseBackPath = await SavingHelper.SaveFileToFolder(input.DrivingLicenseBackImage, "CarLicenses");
+                var nationalIDFrontPath = await SavingHelper.SaveFileToFolder(input.NationalIDFrontImage, "IdImages");
+                var nationalIDBackPath = await SavingHelper.SaveFileToFolder(input.NationalIDBackImage, "IdImages");
 
                 User user = new User
                 {
@@ -103,6 +104,10 @@
                     PhoneNumber = input.PhoneNumber,
                     DateOfBirth = input.DateOfBirth,
                     Gender = input.Gender,
+                    DrivingLicenseFrontImagePath = drivingLicenseFrontPath,
+                    DrivingLicenseBackImagePath = drivingLicenseBackPath,
+                    NationalIDFrontImagePath = nationalIDFrontPath,
+                    NationalIDBackImagePath = nationalIDBackPath,
                     CreatedBy = "System",
                     UpdatedBy = "System",
                     CreationDate = DateTime.Now,
@@ -110,12 +115,8 @@
                     IsActive = true,
                     RoleId = 3,
                     OTPCode = new Random().Next(11111, 99999).ToString(),
-                    OTPExpiry = DateTime.Now.AddMinutes(5),
-                    DrivingLicenseFrontImagePath = input.DrivingLicenseFrontImagePath,
-                    DrivingLicenseBackImagePath = input.DrivingLicenseBackImagePath,
-                    NationalIDFrontImagePath = input.NationalIDFrontImagePath,
-                    NationalIDBackImagePath = input.NationalIDBackImagePath,
-                    
+                    OTPExpiry = DateTime.Now.AddMinutes(5)
+                  
                 };
                 await MailingHelper.SendEmail(input.PhoneNumber, user.OTPCode, "Sign Up  OTP", "Complete Sign Up Operation");
 
@@ -129,10 +130,10 @@
             public async Task<string> Verification(VerificationDTO input)
             {
                 if (string.IsNullOrWhiteSpace(input.PhoneNumber) || string.IsNullOrWhiteSpace(input.OTPCode))
-                    return ("Email and OTP code are required.");
+                    return ("PhoneNumber and OTP code are required.");
 
-                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.Otpcode == input.OTPCode
-                && u.IsLogedIn == false && u.Otpexpiry > DateTime.Now).SingleOrDefault();
+                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.OTPCode == input.OTPCode
+                && u.IsLogedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
 
                 if (user == null)
                 {
@@ -142,8 +143,8 @@
                 {
 
                     user.IsVerified = true;
-                    user.Otpexpiry = null;
-                    user.Otpcode = null;
+                    user.OTPExpiry = null;
+                    user.OTPCode = null;
                     _context.Update(user);
                     _context.SaveChanges();
                     return "Your Account Is Verifyed";
@@ -152,8 +153,8 @@
                 {
                     user.LastLoginTime = DateTime.Now;
                     user.IsLogedIn = true;
-                    user.Otpexpiry = null;
-                    user.Otpcode = null;
+                    user.OTPExpiry = null;
+                    user.OTPCode = null;
 
                     _context.Update(user);
                     _context.SaveChanges();
@@ -167,9 +168,9 @@
             public async Task<bool> ResetPassword(ResetPasswordDTO input)
             {
                 if (input == null || string.IsNullOrWhiteSpace(input.PhoneNumber)
-             || string.IsNullOrWhiteSpace(input.Password)
-             || string.IsNullOrWhiteSpace(input.ConfirmPassword)
-             || string.IsNullOrWhiteSpace(input.OTPCode))
+                 || string.IsNullOrWhiteSpace(input.Password)
+                 || string.IsNullOrWhiteSpace(input.ConfirmPassword)
+                 || string.IsNullOrWhiteSpace(input.OTPCode))
 
                 {
                     return false;
@@ -181,8 +182,8 @@
                     return false;
                 }
 
-                var user = _context.Users.Where(u => u.Email == input.PhoneNumber && u.Otpcode == input.OTPCode
-                && u.IsLogedIn == false && u.Otpexpiry > DateTime.Now).SingleOrDefault();
+                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.OTPCode == input.OTPCode
+                && u.IsLogedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
 
                 if (user == null)
                 {
@@ -193,8 +194,8 @@
                     return false;
                 }
                 user.Password = input.ConfirmPassword;
-                user.Otpcode = null;
-                user.Otpexpiry = null;
+                user.OTPCode = null;
+                user.OTPExpiry = null;
 
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();

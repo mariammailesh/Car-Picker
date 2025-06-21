@@ -11,9 +11,9 @@ namespace Car_Picker_API.DTOs
 
         public Gender Gender { get; set; }
 
-        public string DrivingLicenseFrontImagePath { get; set; }
-        public string DrivingLicenseBackImagePath { get; set; }
-        public string NationalIDFrontImagePath { get; set; }
-        public string NationalIDBackImagePath { get; set; }
+        public IFormFile DrivingLicenseFrontImage { get; set; }
+        public IFormFile DrivingLicenseBackImage { get; set; }
+        public IFormFile NationalIDFrontImage { get; set; }
+        public IFormFile NationalIDBackImage { get; set; }
     }
 }
