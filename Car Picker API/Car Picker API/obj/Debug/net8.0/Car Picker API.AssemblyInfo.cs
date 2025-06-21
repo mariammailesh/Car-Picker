@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Car Picker API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56ab72c9da8c733be51843718a12dd30c017c0a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7713a7a2e0bd73f535aff1752701d6a255cbd33")]
 [assembly: System.Reflection.AssemblyProductAttribute("Car Picker API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Car Picker API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
