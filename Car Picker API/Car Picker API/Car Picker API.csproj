@@ -25,11 +25,7 @@
 
   <ItemGroup>
 
-    <Folder Include="Interfaces\" />
-
     <Folder Include="Uploads\" />
-    <Folder Include="Services\" />
-    <Folder Include="Controllers\" />
 
     <Folder Include="Helpers\Enums\" />
 
