@@ -1,4 +1,5 @@
 using Car_Picker_API.Interfaces;
+using Car_Picker_API.Services;
 using Car_Picker_API.Services.Car_Picker_API.Servicess;
 using CarPicker_API.Context;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ options.UseSqlServer("Data Source=DESKTOP-FB86LSD\\SQLSERVER;Initial Catalog=Say
 // injected Classes and Interfaces configuration
 //builder.Services.AddScoped<ILookupInterface, LookupAppService>();//<the injected interface, the class that implenents the injected interface> //and thats how we configure the dependency injection for the interface and the class that implements it
 builder.Services.AddScoped<IUserAuthenticationInterface, AuthenticationAppServices>();
+builder.Services.AddScoped<ILookupInterface, LookupAppService>();
 
 var app = builder.Build();
 
