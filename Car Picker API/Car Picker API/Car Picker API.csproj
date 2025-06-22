@@ -25,16 +25,8 @@
 
   <ItemGroup>
 
-    <Folder Include="Uploads\" />
-
     <Folder Include="Helpers\Enums\" />
 
   </ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Uploads\**\*.*">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
 
 </Project>
