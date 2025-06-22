@@ -27,6 +27,10 @@
 
     <Folder Include="Helpers\Enums\" />
 
+    <Folder Include="Uploads\CarLicenses\" />
+
+    <Folder Include="Uploads\IdImages\" />
+
   </ItemGroup>
 
 </Project>

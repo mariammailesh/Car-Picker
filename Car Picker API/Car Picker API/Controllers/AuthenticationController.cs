@@ -17,48 +17,6 @@ namespace Car_Picker_API.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> SignIn(SignInputDTO input)
-        {
-            try
-            {
-                var response = await _appService.SignIn(input);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-        [HttpPost("[action]")]
-        public async Task<IActionResult> SendOTP(string email)
-        {
-            try
-            {
-                var response = await _appService.SendOTP(email);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-
-        [HttpPost("[action]")]
-        public async Task<IActionResult> SignOut(int userId)
-        {
-            try
-            {
-                var response = await _appService.SignOut(userId);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpPost("[action]")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> SignUp([FromForm] SignUpDTO input)
         {
@@ -72,6 +30,7 @@ namespace Car_Picker_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
 
         [HttpPost("[action]")]
         public async Task<IActionResult> Verification(VerificationDTO input)
@@ -89,6 +48,34 @@ namespace Car_Picker_API.Controllers
         }
 
         [HttpPost("[action]")]
+        public async Task<IActionResult> SignIn(SignInputDTO input)
+        {
+            try
+            {
+                var response = await _appService.SignIn(input);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SendOTP(string email)
+        {
+            try
+            {
+                var response = await _appService.SendOTP(email);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("[action]")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO input)
         {
             try
@@ -102,6 +89,18 @@ namespace Car_Picker_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SignOut(int userId)
+        {
+            try
+            {
+                var response = await _appService.SignOut(userId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
