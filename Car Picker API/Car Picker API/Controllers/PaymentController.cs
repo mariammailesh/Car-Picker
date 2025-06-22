@@ -21,11 +21,19 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var response = await _appService.AddPaymentMethod(input);
-                return Ok(response);
+                return Ok(new
+                {
+                    message = "Payment method processed successfully",
+                    data = response
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error processing payment method",
+                    details = ex.Message
+                });
             }
         }
 
@@ -35,11 +43,19 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var result = await _appService.GetAllPayments();
-                return Ok(result);
+                return Ok(new
+                {
+                    message = "Payments retrieved successfully",
+                    data = result
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving payments",
+                    details = ex.Message
+                });
             }
         }
     }

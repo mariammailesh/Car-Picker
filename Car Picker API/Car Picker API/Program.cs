@@ -22,6 +22,7 @@ options.UseSqlServer("Data Source=DESKTOP-FB86LSD\\SQLSERVER;Initial Catalog=Car
 builder.Services.AddScoped<IUserAuthenticationInterface, AuthenticationAppServices>();
 builder.Services.AddScoped<ILookupInterface, LookupAppService>();
 builder.Services.AddScoped<IPaymentInterface, PaymentAppServices>();
+builder.Services.AddScoped<IBookingInterface, BookingAppServices>();
 
 var app = builder.Build();
 

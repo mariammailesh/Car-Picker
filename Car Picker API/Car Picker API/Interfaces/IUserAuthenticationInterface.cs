@@ -1,4 +1,4 @@
-﻿using Car_Picker_API.DTOs;
+﻿using Car_Picker_API.DTOs.Authentication;
 
 namespace Car_Picker_API.Interfaces
 {

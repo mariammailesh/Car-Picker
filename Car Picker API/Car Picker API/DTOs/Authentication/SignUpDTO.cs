@@ -1,6 +1,6 @@
 ﻿using Car_Picker_API.Helpers.Enums;
 
-namespace Car_Picker_API.DTOs
+namespace Car_Picker_API.DTOs.Authentication
 {
     public class SignUpDTO
     {
