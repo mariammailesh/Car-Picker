@@ -10,7 +10,6 @@ namespace CarPicker_API.Context
         //listing the tables in this database here!
        
         public DbSet<User> Users { get; set; } // Table for Users
-        public DbSet<ParentEntity> ParentEntities { get; set; } // Table for Parent Entities
         public DbSet<Car> Cars { get; set; } // Table for Cars
         public DbSet<CarImage> CarImages { get; set; } // Table for Car Images
         public DbSet<CarReview> CarReviews { get; set; } // Table for Car Reviews

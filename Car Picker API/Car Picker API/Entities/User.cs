@@ -6,8 +6,8 @@ namespace Car_Picker_API.Entities
     {
 
         public string FullName { get; set; }
-        public string Username { get; set; } //hashed
-        public string Email { get; set; } //hashed
+       //public string Username { get; set; } //hashed
+       //public string Email { get; set; } //hashed
         public string Password { get; set; }//hashed
         public string PhoneNumber { get; set; }
         public Role RoleId { get; set; } = Role.Client; // Enum for Role stores 3
