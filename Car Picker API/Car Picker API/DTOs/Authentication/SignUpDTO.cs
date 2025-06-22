@@ -8,7 +8,7 @@ namespace Car_Picker_API.DTOs.Authentication
         public string Password { get; set; }
         public string PhoneNumber { get; set; }
         public DateOnly DateOfBirth { get; set; }
-
+        public string Email { get; set; }
         public Gender Gender { get; set; }
 
         public IFormFile DrivingLicenseFrontImage { get; set; }

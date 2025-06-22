@@ -13,8 +13,6 @@
             private readonly CarPickerDbContext _context;
             public AuthenticationAppServices(CarPickerDbContext context)
             {
-
-
                 _context = context;
             }
 
@@ -38,10 +36,10 @@
 
             public async Task<string> SignIn(SignInputDTO input)
             {
-                if (string.IsNullOrWhiteSpace(input.PhoneNumber) || string.IsNullOrWhiteSpace(input.Password))
+                if (string.IsNullOrWhiteSpace(input.Email) || string.IsNullOrWhiteSpace(input.Password))
                     return ("PhoneNumber and Password are required");
 
-                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.Password == input.Password && u.IsLoggedIn == false).SingleOrDefault();
+                var user = _context.Users.Where(u => u.Email == input.Email && u.Password == input.Password && u.IsLoggedIn == false).SingleOrDefault();
 
      
                 if (user == null)
@@ -54,7 +52,7 @@
                 user.OTPCode = otp.ToString();
 
                 user.OTPExpiry = DateTime.Now.AddMinutes(5);
-                await MailingHelper.SendEmail(input.PhoneNumber, user.OTPCode, "Sign In OTP", "Complete Sign In Operation");
+                await MailingHelper.SendEmail(input.Email, user.OTPCode, "Sign In OTP", "Complete Sign In Operation");
 
                 _context.Update(user);
                 _context.SaveChanges();
@@ -81,6 +79,7 @@
             public async Task<string> SignUp(SignUpDTO input)
             {
                 if (!ValidationHelper.ISValidFullName(input.FullName) ||
+                    !ValidationHelper.IsValidEmail(input.Email) ||
                     !ValidationHelper.IsValidDateOfBirth(input.DateOfBirth) ||
                     !ValidationHelper.IsValidPhoneNumber(input.PhoneNumber) ||
                     !ValidationHelper.IsValidPassword(input.Password))
@@ -90,9 +89,9 @@
                 }
 
 
-                if (_context.Users.Any(u => u.PhoneNumber == input.PhoneNumber))
+                if (_context.Users.Any(u => u.Email == input.Email))
                 {
-                    return "Phone Number already exists.";
+                    return "Email already exists.";
                 }
 
                 var drivingLicenseFrontPath = await SavingHelper.SaveFileToFolder(input.DrivingLicenseFrontImage, "CarLicenses");
@@ -106,6 +105,7 @@
                     Password = HashingHelper.HashValueWith384(input.Password),
                     PhoneNumber = input.PhoneNumber,
                     DateOfBirth = input.DateOfBirth,
+                    Email = input.Email,
                     Gender = input.Gender,
                     DrivingLicenseFrontImagePath = drivingLicenseFrontPath,
                     DrivingLicenseBackImagePath = drivingLicenseBackPath,
@@ -121,21 +121,21 @@
                     OTPExpiry = DateTime.Now.AddMinutes(5)
                   
                 };
-                await MailingHelper.SendEmail(input.PhoneNumber, user.OTPCode, "Sign Up  OTP", "Complete Sign Up Operation");
+                await MailingHelper.SendEmail(input.Email, user.OTPCode, "Sign Up  OTP", "Complete Sign Up Operation");
 
                 _context.Users.Add(user);
 
                 await _context.SaveChangesAsync();
 
-                return "Please verify your Phone Number using the OTP sent.";
+                return "Please verify your Email using the OTP sent.";
             }
 
             public async Task<string> Verification(VerificationDTO input)
             {
-                if (string.IsNullOrWhiteSpace(input.PhoneNumber) || string.IsNullOrWhiteSpace(input.OTPCode))
+                if (string.IsNullOrWhiteSpace(input.Email) || string.IsNullOrWhiteSpace(input.OTPCode))
                     return ("PhoneNumber and OTP code are required.");
 
-                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.OTPCode == input.OTPCode
+                var user = _context.Users.Where(u => u.PhoneNumber == input.Email && u.OTPCode == input.OTPCode
                 && u.IsLoggedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
 
                 if (user == null)
@@ -170,7 +170,7 @@
 
             public async Task<bool> ResetPassword(ResetPasswordDTO input)
             {
-                if (input == null || string.IsNullOrWhiteSpace(input.PhoneNumber)
+                if (input == null || string.IsNullOrWhiteSpace(input.Email)
                  || string.IsNullOrWhiteSpace(input.Password)
                  || string.IsNullOrWhiteSpace(input.ConfirmPassword)
                  || string.IsNullOrWhiteSpace(input.OTPCode))
@@ -180,12 +180,12 @@
 
                 }
 
-                if (!ValidationHelper.IsValidPhoneNumber(input.PhoneNumber))
+                if (!ValidationHelper.IsValidPhoneNumber(input.Email))
                 {
                     return false;
                 }
 
-                var user = _context.Users.Where(u => u.PhoneNumber == input.PhoneNumber && u.OTPCode == input.OTPCode
+                var user = _context.Users.Where(u => u.PhoneNumber == input.Email && u.OTPCode == input.OTPCode
                 && u.IsLoggedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
 
                 if (user == null)
