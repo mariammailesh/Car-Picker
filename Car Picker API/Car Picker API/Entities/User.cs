@@ -6,6 +6,7 @@ namespace Car_Picker_API.Entities
     {
 
         public string FullName { get; set; }
+        public string Email { get; set; } // Unique email for the user
         public string Password { get; set; }//hashed
         public string PhoneNumber { get; set; }
         public bool IsLoggedIn { get; set; } = false;
