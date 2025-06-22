@@ -31,11 +31,26 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configure the app to serve static files from the "Uploads" directory for Images upload
+//var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+//    RequestPath = "/uploads" // host/uploads/filename.extansions
+//});
+var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
-    RequestPath = "/uploads" // host/uploads/filename.extansions
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
 });
+
 
 app.UseHttpsRedirection();
 
