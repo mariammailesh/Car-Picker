@@ -1,4 +1,4 @@
-﻿using Car_Picker_API.DTOs;
+﻿using Car_Picker_API.DTOs.Authentication;
 using Car_Picker_API.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

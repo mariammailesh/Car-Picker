@@ -1,4 +1,4 @@
-﻿namespace Car_Picker_API.DTOs
+﻿namespace Car_Picker_API.DTOs.Authentication
 {
     public class SignInputDTO
     {

@@ -1,7 +1,7 @@
 ﻿namespace Car_Picker_API.Services
 {
     using CarPicker_API.Context;
-    using global::Car_Picker_API.DTOs;
+    using global::Car_Picker_API.DTOs.Authentication;
     using global::Car_Picker_API.Entities;
     using global::Car_Picker_API.Helpers;
     using global::Car_Picker_API.Interfaces;
