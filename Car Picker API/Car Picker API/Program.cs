@@ -21,6 +21,7 @@ options.UseSqlServer("Data Source=DESKTOP-FB86LSD\\SQLSERVER;Initial Catalog=Car
 //builder.Services.AddScoped<ILookupInterface, LookupAppService>();//<the injected interface, the class that implenents the injected interface> //and thats how we configure the dependency injection for the interface and the class that implements it
 builder.Services.AddScoped<IUserAuthenticationInterface, AuthenticationAppServices>();
 builder.Services.AddScoped<ILookupInterface, LookupAppService>();
+builder.Services.AddScoped<IPaymentInterface, PaymentAppServices>();
 
 var app = builder.Build();
 
