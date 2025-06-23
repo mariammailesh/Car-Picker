@@ -11,7 +11,7 @@ namespace Car_Picker_API.Entities
         public PaymentMethod PaymentMethod { get; set; }
 
         /// Foreign Key 
-        public int ReservationId { get; set; }// Foreign Key to RentalReservation table
+        public int? ReservationId { get; set; }// Foreign Key to RentalReservation table
         public int UserId { get; set; } // Foreign Key to User table
 
         /// Navigation properties
