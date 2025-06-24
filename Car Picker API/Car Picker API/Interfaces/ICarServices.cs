@@ -12,6 +12,7 @@ namespace Car_Picker_API.Interfaces
 
         Task<List<CarGeneralInfoDTO>> GetCarsForSale();
 
+        Task<List<CarGeneralInfoDTO>> GetCarsForRent();
 
         Task<List<CarImageDTO>> GetCarImages(int carId);
 
