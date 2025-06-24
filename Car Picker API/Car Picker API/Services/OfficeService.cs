@@ -26,16 +26,19 @@ namespace Car_Picker_API.Services
                 {
                     Id = o.Id,
                     OfficeName = o.OfficeName,
+
                     ReservationsCount = o.ReservationsCount,
                     OfficeCategory = o.OfficeCategory.ToString(),
-                    OfficeAddress = o.OfficeAddress,
-                    OfficePhoneNumber = o.OfficePhoneNumber,
-                    OfficeEmail = o.OfficeEmail,
-                    OfficeDescription = o.OfficeDescription,
-                    OfficeImageUrl = o.OfficeImageUrl
+                    OfficeImageUrl = o.OfficeImageUrl,
+
+                    AverageStarsReview = o.OfficeReviews.Any()
+                        ? o.OfficeReviews.Average(r => (int)r.StarsReview)
+                        : 0
                 })
                 .ToListAsync();
         }
+
+
 
 
 
@@ -51,7 +54,6 @@ namespace Car_Picker_API.Services
                     OfficeName = o.OfficeName,
                     OfficeAddress = o.OfficeAddress,
                     OfficePhoneNumber = o.OfficePhoneNumber,
-                    OfficeEmail = o.OfficeEmail,
                     OfficeDescription = o.OfficeDescription,
                     ReservationsCount = o.ReservationsCount,
                     OfficeCategory = o.OfficeCategory.ToString(),
@@ -71,13 +73,13 @@ namespace Car_Picker_API.Services
                 .Select(r => new OfficeReviewDTO
                 {
                     Id = r.Id,
-                    ReviewTitle = r.ReviewTitle,
-                    ReviewContent = r.ReviewContent,
+                    
                     ReviewStatus = r.ReviStatus.ToString(),
-                    StarsReview = (int)r.StarsReview,
+                    StarsReview = r.StarsReview,
+                    TotalReviewsForOffice = r.TotalReviewsForOffice ,
                     OfficeId = r.OfficeId,
                     UserId = r.UserId,
-                    UserName = r.User.FullName
+                    
                 })
                 .ToListAsync();
 

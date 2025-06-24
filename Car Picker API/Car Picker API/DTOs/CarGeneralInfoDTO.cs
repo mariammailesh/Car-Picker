@@ -12,7 +12,9 @@
         public float? SalePrice { get; set; }
         public string Description { get; set; }
         public string CarPurpose { get; set; }
- 
+
+        public string ImageURL { get; set; }
+
 
     }
 }
