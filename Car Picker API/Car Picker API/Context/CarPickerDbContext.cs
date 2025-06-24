@@ -35,7 +35,34 @@ namespace CarPicker_API.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Add any additional model configurations here
+
+            // ضبط علاقة Reservation مع Office مع منع الحذف التلقائي (No Cascade)
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Office)
+                .WithMany(o => o.Reservations)
+                .HasForeignKey(r => r.OfficeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ضبط علاقة Reservation مع Car - ممكن تستخدم Cascade أو Restrict حسب حاجتك
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Car)
+                .WithMany(c => c.Reservations)
+                .HasForeignKey(r => r.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // ضبط علاقة Reservation مع User
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reservations)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // ضبط علاقة Payment مع Reservation
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Reservation)
+                .WithOne(r => r.Payment)
+                .HasForeignKey<Payment>(p => p.ReservationId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

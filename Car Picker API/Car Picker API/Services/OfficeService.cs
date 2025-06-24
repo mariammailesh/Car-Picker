@@ -57,7 +57,7 @@ namespace Car_Picker_API.Services
                     OfficeDescription = o.OfficeDescription,
                     ReservationsCount = o.ReservationsCount,
                     OfficeCategory = o.OfficeCategory.ToString(),
-                    OfficeImageUrl = o.OfficeImageUrl
+                    //OfficeImageUrl = o.OfficeImageUrl
                 }).ToListAsync();
         }
 
