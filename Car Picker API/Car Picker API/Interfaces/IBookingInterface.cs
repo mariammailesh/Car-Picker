@@ -13,6 +13,5 @@ namespace Car_Picker_API.Interfaces
 
         Task<bool> UpdateBookingStatus(int reservationId, ReservationStatus newStatus);
 
-        Task<bool> DeleteBooking(int reservationId);
     }
 }

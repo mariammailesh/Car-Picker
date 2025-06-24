@@ -14,13 +14,13 @@ namespace Car_Picker_API.Entities
         // Foreign Key 
         public int UserId { get; set; }
         public int CarId { get; set; }
-        //public int OfficeId { get; set; } // Foreign Key to Office table
+        public int OfficeId { get; set; } // Foreign Key to Office table
 
         // Navigation properties
         public Payment Payment { get; set; } // Navigation property to the Payment entity
         public User User { get; set; } // Navigation property to the User entity
         public Car Car { get; set; } // Navigation property to the Car entity
-        //public Office Office { get; set; } // Navigation property to the Office entity
+        public Office Office { get; set; } // Navigation property to the Office entity
 
 
     }

@@ -4,6 +4,7 @@ using CarPicker_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Picker_API.Migrations
 {
     [DbContext(typeof(CarPickerDbContext))]
-    partial class CarPickerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624212429_AddOfficeImageUrlColumnV2")]
+    partial class AddOfficeImageUrlColumnV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -552,7 +555,7 @@ namespace Car_Picker_API.Migrations
                     b.Property<bool>("IsDeliveredCar")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OfficeId")
+                    b.Property<int?>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<string>("PickupLocation")
@@ -766,8 +769,7 @@ namespace Car_Picker_API.Migrations
                 {
                     b.HasOne("Car_Picker_API.Entities.Reservation", "Reservation")
                         .WithOne("Payment")
-                        .HasForeignKey("Car_Picker_API.Entities.Payment", "ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Car_Picker_API.Entities.Payment", "ReservationId");
 
                     b.HasOne("Car_Picker_API.Entities.User", "User")
                         .WithMany("Payments")
@@ -788,11 +790,9 @@ namespace Car_Picker_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Car_Picker_API.Entities.Office", "Office")
+                    b.HasOne("Car_Picker_API.Entities.Office", null)
                         .WithMany("Reservations")
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("OfficeId");
 
                     b.HasOne("Car_Picker_API.Entities.User", "User")
                         .WithMany("Reservations")
@@ -801,8 +801,6 @@ namespace Car_Picker_API.Migrations
                         .IsRequired();
 
                     b.Navigation("Car");
-
-                    b.Navigation("Office");
 
                     b.Navigation("User");
                 });
