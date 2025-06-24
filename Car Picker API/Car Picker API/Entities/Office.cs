@@ -19,5 +19,7 @@ namespace Car_Picker_API.Entities
         public ICollection<OfficeReview> OfficeReviews { get; set; } // Navigation property to OfficeReviews
 
 
+        public string OfficeImageUrl { get; set; }
+
     }
 }

@@ -9,6 +9,7 @@ namespace Car_Picker_API.Entities
         public ReviewStatus ReviStatus { get; set; } = ReviewStatus.Pending; // Enum for review status (Pending, Approved, Rejected)
         public short RatingAmount { get; set; } = 1;
 
+        public int TotalReviewsForOffice { get; set; }
         // Foreign Keys
         public int OfficeId { get; set; } // Foreign Key to Office entity
         public int UserId { get; set; } // Foreign Key to User entity
