@@ -92,8 +92,7 @@ namespace Car_Picker_API.Services
                 UserId = r.UserId,
                 CarId = r.CarId,
                 CarModel = r.Car.Model,
-                StartDate = r.StartDate,
-                EndDate = r.EndDate,
+                TotalDays = (r.EndDate - r.StartDate).Days,
                 ReservationStatus = r.ReservationStatus.ToString(),
                 IsDeliveredCar = r.IsDeliveredCar,
             }).ToList();
