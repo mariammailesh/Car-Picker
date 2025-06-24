@@ -81,7 +81,9 @@ namespace Car_Picker_API.Services
                     SalePrice = c.SalePrice,
                     Description = c.Description,
                     CarPurpose = c.CarPurpose.ToString() ,
-                   
+
+                    ImageURL = c.CarImages.Select(img => img.imageURL).FirstOrDefault()
+
                 })
                 .FirstOrDefaultAsync();
 
@@ -185,6 +187,29 @@ namespace Car_Picker_API.Services
                 })
                 .ToListAsync();
         }
+
+
+        // Get Cars For Rent
+        public async Task<List<CarGeneralInfoDTO>> GetCarsForRent()
+        {
+            return await _context.Cars
+                .Where(c => c.CarPurpose == CarPurpose.ForRent && c.IsActive)
+                .Select(c => new CarGeneralInfoDTO
+                {
+                    Id = c.Id,
+                    BrandName = c.BrandName,
+                    LicensePlateNumber = c.LicensePlateNumber,
+                    Model = c.Model,
+                    Year = c.Year,
+                    Color = c.Color,
+                    RentalPricePerDay = c.RentalPricePerDay,
+                    SalePrice = c.SalePrice,
+                    Description = c.Description,
+                    CarPurpose = c.CarPurpose.ToString()
+                })
+                .ToListAsync();
+        }
+
 
 
 
