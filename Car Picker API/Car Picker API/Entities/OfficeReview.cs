@@ -4,10 +4,10 @@ namespace Car_Picker_API.Entities
 {
     public class OfficeReview : ParentEntity
     {
-        public string ReviewTitle { get; set; }
+       
         public string ReviewContent { get; set; } // Content of the review
         public ReviewStatus ReviStatus { get; set; } = ReviewStatus.Pending; // Enum for review status (Pending, Approved, Rejected)
-        public StarsReview StarsReview { get; set; } = StarsReview.Average;// Enum for star rating (1-5 stars)
+        public short RatingAmount { get; set; } = 1;
 
         public int TotalReviewsForOffice { get; set; }
         // Foreign Keys
