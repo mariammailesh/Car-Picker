@@ -4,6 +4,7 @@ using CarPicker_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Picker_API.Migrations
 {
     [DbContext(typeof(CarPickerDbContext))]
-    partial class CarPickerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624185547_remove the data from review ")]
+    partial class removethedatafromreview
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -443,9 +446,6 @@ namespace Car_Picker_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StarsReview")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalReviewsForOffice")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")

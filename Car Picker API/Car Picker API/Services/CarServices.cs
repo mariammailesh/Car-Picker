@@ -32,10 +32,8 @@ namespace Car_Picker_API.Services
                     Year = c.Year,
                     RentalPricePerDay = c.RentalPricePerDay,
                     SalePrice = c.SalePrice,
-                    Color = c.Color,
-                    Description = c.Description,
                     CarPurpose = c.CarPurpose.ToString(),
-                    LicensePlateNumber = c.LicensePlateNumber
+                    
                 })
                 .ToListAsync();
         }
@@ -45,7 +43,7 @@ namespace Car_Picker_API.Services
         {
             return await _context.Cars
                 .Where(c => c.OfficeId == officeId && c.IsActive)
-                .Include(c => c.CarImages) // ✅ تضمين الصور
+                .Include(c => c.CarImages) 
                 .Select(c => new CarByOfficeDTO
                 {
                     Id = c.Id,
@@ -82,7 +80,8 @@ namespace Car_Picker_API.Services
                     RentalPricePerDay = c.RentalPricePerDay,
                     SalePrice = c.SalePrice,
                     Description = c.Description,
-                    CarPurpose = c.CarPurpose.ToString()
+                    CarPurpose = c.CarPurpose.ToString() ,
+                   
                 })
                 .FirstOrDefaultAsync();
 
@@ -119,7 +118,9 @@ namespace Car_Picker_API.Services
                 TransmissionType = specs.TransmissionType.ToString(),
                 PerformanceScore = specs.performanceScore,
                 FuelType = specs.FuelType.ToString(),
-                SeatingCapacity = specs.SeatingCapacity
+                SeatingCapacity = specs.SeatingCapacity ,
+                
+
             };
         }
 
@@ -217,10 +218,11 @@ namespace Car_Picker_API.Services
                 .Where(r => r.CarId == carId && r.ReviStatus == ReviewStatus.Approved)
                 .Select(r => new CarReviewDTO
                 {
-                    ReviewTitle = r.ReviewTitle,
+                    
                     ReviewContent = r.ReviewContent,
                     StarsReview = (int)r.StarsReview,
                     UserName = r.User.FullName,
+
                     Date = r.CreationDate
                 }).ToListAsync();
         }

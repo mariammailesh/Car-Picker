@@ -1,4 +1,6 @@
-﻿namespace Car_Picker_API.DTOs
+﻿using Car_Picker_API.Entities;
+
+namespace Car_Picker_API.DTOs
 {
     public class CarSpecsDTO
     {
@@ -8,7 +10,9 @@
         public string TransmissionType { get; set; }
         public float PerformanceScore { get; set; }
         public string FuelType { get; set; }
-        public short SeatingCapacity { get; set; } 
+        public short SeatingCapacity { get; set; }
+        public string BrandName { get; set; }
+        public float? RentalPricePerDay { get; set; }
 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Car_Picker_API.DTOs
+﻿using Car_Picker_API.Helpers.Enums;
+
+namespace Car_Picker_API.DTOs
 {
     public class OfficeDTO
     {
@@ -8,7 +10,8 @@
         public string OfficeCategory { get; set; } // Enum كـ string
         public string OfficeAddress { get; set; }
         public string OfficePhoneNumber { get; set; }
-        public string OfficeEmail { get; set; }
+
+        public double AverageStarsReview { get; set; }
         public string OfficeDescription { get; set; }
 
         public string OfficeImageUrl { get; set; }
