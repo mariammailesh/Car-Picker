@@ -63,5 +63,27 @@ namespace Car_Picker_API.Services
 
 
 
+        public async Task<List<OfficeReviewDTO>> GetOfficeReviewsByOfficeIdAsync(int officeId)
+        {
+            var reviews = await _context.OfficeReviews
+                .Include(r => r.User)
+                .Where(r => r.OfficeId == officeId && r.ReviStatus == Helpers.Enums.ReviewStatus.Approved)
+                .Select(r => new OfficeReviewDTO
+                {
+                    Id = r.Id,
+                    ReviewTitle = r.ReviewTitle,
+                    ReviewContent = r.ReviewContent,
+                    ReviewStatus = r.ReviStatus.ToString(),
+                    StarsReview = (int)r.StarsReview,
+                    OfficeId = r.OfficeId,
+                    UserId = r.UserId,
+                    UserName = r.User.FullName
+                })
+                .ToListAsync();
+
+            return reviews;
+        }
     }
+
+
 }
