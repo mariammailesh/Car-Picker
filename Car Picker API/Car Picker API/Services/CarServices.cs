@@ -120,7 +120,6 @@ namespace Car_Picker_API.Services
                 FuelType = specs.FuelType.ToString(),
                 SeatingCapacity = specs.SeatingCapacity ,
                 
-
             };
         }
 

@@ -11,8 +11,7 @@ namespace Car_Picker_API.DTOs
         public float PerformanceScore { get; set; }
         public string FuelType { get; set; }
         public short SeatingCapacity { get; set; }
-        public string BrandName { get; set; }
-        public float? RentalPricePerDay { get; set; }
+      
 
     }
 }
