@@ -57,5 +57,26 @@ namespace Car_Picker_API.Controllers
         }
 
 
+
+
+        [HttpGet("office/{officeId}")]
+        public async Task<IActionResult> GetReviewsByOfficeId(int officeId)
+        {
+            try
+            {
+                var reviews = await _officeService.GetOfficeReviewsByOfficeIdAsync(officeId);
+
+                if (reviews == null || !reviews.Any())
+                {
+                    return NotFound($"No reviews found for office with ID {officeId}.");
+                }
+
+                return Ok(reviews);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
