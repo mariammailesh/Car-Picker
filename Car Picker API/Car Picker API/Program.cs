@@ -16,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //DB Context configuration injection
 builder.Services.AddDbContext<CarPickerDbContext>(options =>
-options.UseSqlServer("Data Source=REEM-NAEL\\SQLEXPRESS02;Initial Catalog=CarPickerDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+options.UseSqlServer("Data Source=DESKTOP-N91Q09L\\SQLEXPRESS;Initial Catalog=CarPickerDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
 // injected Classes and Interfaces configuration
 //builder.Services.AddScoped<ILookupInterface, LookupAppService>();//<the injected interface, the class that implenents the injected interface> //and thats how we configure the dependency injection for the interface and the class that implements it
 builder.Services.AddScoped<IUserAuthenticationInterface, AuthenticationAppServices>();
@@ -25,6 +25,7 @@ builder.Services.AddScoped<IPaymentInterface, PaymentAppServices>();
 builder.Services.AddScoped<IBookingInterface, BookingAppServices>();
 builder.Services.AddScoped<ICarServices, CarServices>();
 builder.Services.AddScoped<IOfficeService, OfficeService>();
+builder.Services.AddScoped<ICategoriesInterface, CategoriesServices>();
 
 
 var app = builder.Build();
