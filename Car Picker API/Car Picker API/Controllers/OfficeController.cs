@@ -36,9 +36,6 @@ namespace Car_Picker_API.Controllers
             }
         }
 
-
-
-
         [HttpGet("by-category/{category}")]
         public async Task<IActionResult> GetOfficesByCategory(OfficesCategory category)
         {
@@ -55,9 +52,6 @@ namespace Car_Picker_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
-
-
 
         [HttpGet("office/{officeId}")]
         public async Task<IActionResult> GetReviewsByOfficeId(int officeId)

@@ -2,7 +2,7 @@
 
 namespace Car_Picker_API.DTOs.Review_DTO.Request
 {
-    public class CreateCarReviewDTO
+    public class RequestCarReviewDTO
     {
         public int UserId { get; set; }
         public int CarId { get; set; }
