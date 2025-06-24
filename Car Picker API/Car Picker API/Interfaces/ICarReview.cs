@@ -7,10 +7,10 @@ namespace Car_Picker_API.Interfaces
 {
     public interface ICarReview
     {
-        Task<CarReview> GetReviewByIdAsync(int reviewId);
-        Task<IEnumerable<GetCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId);
-        Task<string> CreateReviewAsync(CreateCarReviewDTO input);
-        Task<string> UpdateReviewAsync(CreateCarReviewDTO updatedReview);
+        Task<ResponseCarReviewDTO> GetReviewByIdAsync(int reviewId);
+        Task<IEnumerable<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId);
+        Task<string> CreateReviewAsync(RequestCarReviewDTO input);
+        Task<string> UpdateReviewAsync(RequestCarReviewDTO updatedReview);
         Task<bool> DeleteReviewAsync(int reviewId);
         Task<float> GetAverageRatingForCarAsync(int carId);
         Task<bool> UpdateReviewStatusAsync(int reviewId, ReviewStatus newStatus);

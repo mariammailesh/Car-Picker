@@ -18,15 +18,21 @@ namespace Car_Picker_API.Services
             _context = context;
         }
 
-        public async Task<CarReview> GetReviewByIdAsync(int reviewId)
+        public async Task<ResponseCarReviewDTO> GetReviewByIdAsync(int reviewId)
         {
             if (reviewId <= 0)
                 throw new ArgumentException("Invalid review ID.");
 
             var review = await _context.CarReviews
-                .Include(r => r.User)
-                .Include(r => r.Car)
-                .FirstOrDefaultAsync(r => r.Id == reviewId);
+                .Where(r => r.Id == reviewId && r.ReviewStatus == ReviewStatus.Approved)
+                .Select(r => new ResponseCarReviewDTO
+                {
+                    UserId = r.UserId,
+                    FullName = r.User.FullName,
+                    CarId = r.CarId,
+                    RatingAmount = r.RatingAmount,
+                    Comment = r.ReviewContent,
+                }).SingleOrDefaultAsync();
 
             if (review == null)
                 throw new KeyNotFoundException($"Review with ID {reviewId} not found.");
@@ -34,7 +40,7 @@ namespace Car_Picker_API.Services
             return review;
         } //done
 
-        public async Task<IEnumerable<GetCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId)
+        public async Task<IEnumerable<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId)
         {
             var reviews = _context.CarReviews.Where(r => r.CarId == carId).SingleOrDefault();
             if (reviews == null)
@@ -42,9 +48,10 @@ namespace Car_Picker_API.Services
             
             var getReviewsList = (from Reviews in _context.CarReviews
                                   where Reviews.CarId == carId && Reviews.ReviewStatus == ReviewStatus.Approved
-                                  select new GetCarReviewDTO
+                                  select new ResponseCarReviewDTO
                                   {
                                       UserId = Reviews.UserId,
+                                      FullName = Reviews.User.FullName,
                                       CarId = Reviews.CarId,
                                       RatingAmount = Reviews.RatingAmount,
                                       Comment = Reviews.ReviewContent
@@ -52,7 +59,7 @@ namespace Car_Picker_API.Services
             return getReviewsList;
         }//done
 
-        public async Task<string> CreateReviewAsync(CreateCarReviewDTO input)
+        public async Task<string> CreateReviewAsync(RequestCarReviewDTO input)
         {
             CarReview carReview = new CarReview();
            if(ReviewValidation.ValidateRatingAmount(input.RatingAmount))
@@ -72,7 +79,7 @@ namespace Car_Picker_API.Services
 
         }//done
 
-        public async Task<string> UpdateReviewAsync(CreateCarReviewDTO updatedReview)
+        public async Task<string> UpdateReviewAsync(RequestCarReviewDTO updatedReview)
         {
             if (updatedReview == null)
                 throw new ArgumentException("Invalid review data.");

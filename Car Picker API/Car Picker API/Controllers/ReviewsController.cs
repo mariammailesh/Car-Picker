@@ -36,7 +36,7 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                IEnumerable<GetCarReviewDTO> reviews = await _carReviewService.GetAllReviewsByCarIdAsync(carId);
+                IEnumerable<ResponseCarReviewDTO> reviews = await _carReviewService.GetAllReviewsByCarIdAsync(carId);
                 return StatusCode(200);
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace Car_Picker_API.Controllers
             }
         }
         [HttpPost("Create-Review")]
-        public async Task<IActionResult> CreateReview([FromBody] CreateCarReviewDTO input)
+        public async Task<IActionResult> CreateReview([FromBody] RequestCarReviewDTO input)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Car_Picker_API.Controllers
             }
         }
         [HttpPut("Update-Review")]
-        public async Task<IActionResult> UpdateReview([FromBody] CreateCarReviewDTO updatedReview)
+        public async Task<IActionResult> UpdateReview([FromBody] RequestCarReviewDTO updatedReview)
         {
             try
             {
