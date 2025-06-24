@@ -3,7 +3,6 @@
     public enum Gender
     {
         Male =1,
-        Female =2,
-        WouldPreferNotToSay = 3,
+        Female =2
     }
 }

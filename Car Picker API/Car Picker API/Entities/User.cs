@@ -22,7 +22,7 @@ namespace Car_Picker_API.Entities
 
         //Enum
         public Role RoleId { get; set; } = Role.Client; // Enum for Role stores 3
-        public Gender Gender { get; set; } = Gender.WouldPreferNotToSay;
+        public Gender Gender { get; set; }
 
         // Navigation properties
         public ICollection<Payment> Payments { get; set; } // Navigation property to Payments
