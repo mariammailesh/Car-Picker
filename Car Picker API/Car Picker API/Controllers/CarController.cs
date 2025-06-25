@@ -45,7 +45,7 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                var cars = await _carService.GetCarsByOfficeId(officeId);
+                var cars = await _carService.GetCarsByOfficeIdForSale(officeId);
                 if (cars == null || !cars.Any())
                     return NotFound("No cars found for this office.");
 
@@ -225,6 +225,33 @@ namespace Car_Picker_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+       
+
+
+        [HttpGet("Get-Rent-Cars-By-Office/{officeId}")]
+        public async Task<IActionResult> GetCarsForRentByOfficeId(int officeId)
+        {
+            try
+            {
+                var cars = await _carService.GetCarsForRentByOfficeId(officeId);
+
+                if (cars == null || !cars.Any())
+                    return NotFound($"No rental cars found for Office with ID {officeId}.");
+
+                return Ok(cars);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
+
+
     }
 
 }
