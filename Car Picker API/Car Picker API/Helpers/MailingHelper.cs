@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace Car_Picker_API.Helpers
 {
-    public class MailingHelper
+    public static class MailingHelper
     {
         public static async Task SendEmail(string email, string code, string title, string message)
         {

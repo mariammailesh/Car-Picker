@@ -82,7 +82,7 @@
             public async Task<string> Verification(VerificationDTO input)
             {
                 if (string.IsNullOrWhiteSpace(input.Email) || string.IsNullOrWhiteSpace(input.OTPCode))
-                    return ("PhoneNumber and OTP code are required.");
+                    return ("Email and OTP code are required.");
 
                 var user = _context.Users.Where(u => u.Email == input.Email && u.OTPCode == input.OTPCode
                 && u.IsLoggedIn == false && u.OTPExpiry > DateTime.Now).SingleOrDefault();
