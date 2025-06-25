@@ -24,7 +24,7 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var review = await _officeReviewService.GetReviewByIdAsync(reviewId);
-                return StatusCode(200);
+                return Ok(review);
             }
             catch (Exception ex)
             {
@@ -37,7 +37,7 @@ namespace Car_Picker_API.Controllers
             try
             {
                 IEnumerable<ResponseOfficeReviewDTO> reviews = await _officeReviewService.GetAllReviewsByOfficeIdAsync(officeId);
-                return StatusCode(200);
+                return Ok(reviews);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace Car_Picker_API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException.Message);
             }
         }
         [HttpPut("Update-Review")]
@@ -101,7 +101,7 @@ namespace Car_Picker_API.Controllers
             }
         }
         [HttpPut("Update-Review-Status/{reviewId}")]
-        [Authorize(Roles = "1,2")]
+//        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> UpdateReviewStatus(int reviewId, [FromBody] ReviewStatus newStatus)
         {
             try
