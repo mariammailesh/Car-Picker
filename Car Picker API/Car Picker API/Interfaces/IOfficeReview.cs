@@ -10,11 +10,11 @@ namespace Car_Picker_API.Interfaces
     public interface IOfficeReview
     {
         Task<ResponseOfficeReviewDTO> GetReviewByIdAsync(int reviewId);
-        Task<IEnumerable<ResponseOfficeReviewDTO>> GetAllReviewsByCarIdAsync(int carId);
+        Task<IEnumerable<ResponseOfficeReviewDTO>> GetAllReviewsByOfficeIdAsync(int officeId);//also applied in the count all reviews
         Task<string> CreateReviewAsync(RequestOfficeReviewDTO input);
         Task<string> UpdateReviewAsync(RequestOfficeReviewDTO updatedReview);
         Task<bool> DeleteReviewAsync(int reviewId);
-        Task<float> GetAverageRatingForCarAsync(int carId);
+        Task<float> GetAverageRatingForOfficeAsync(int officeId);
         Task<bool> UpdateReviewStatusAsync(int reviewId, ReviewStatus newStatus);
     }
 }

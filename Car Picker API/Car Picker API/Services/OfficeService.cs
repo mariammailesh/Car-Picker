@@ -1,4 +1,4 @@
-﻿using Car_Picker_API.DTOs;
+using Car_Picker_API.DTOs;
 using Car_Picker_API.Helpers.Enums;
 using Car_Picker_API.Interfaces;
 using CarPicker_API.Context;
@@ -32,7 +32,7 @@ namespace Car_Picker_API.Services
                     OfficeImageUrl = o.OfficeImageUrl,
 
                     AverageStarsReview = o.OfficeReviews.Any()
-                        ? o.OfficeReviews.Average(r => (int)r.RatingAmount)
+                        ? o.OfficeReviews.Average(r => (float)r.RatingAmount)
                         : 0
                 })
                 .ToListAsync();
@@ -57,7 +57,7 @@ namespace Car_Picker_API.Services
                     OfficeDescription = o.OfficeDescription,
                     ReservationsCount = o.ReservationsCount,
                     OfficeCategory = o.OfficeCategory.ToString(),
-                    //OfficeImageUrl = o.OfficeImageUrl
+                    OfficeImageUrl = o.OfficeImageUrl
                 }).ToListAsync();
         }
 
@@ -69,13 +69,13 @@ namespace Car_Picker_API.Services
         {
             var reviews = await _context.OfficeReviews
                 .Include(r => r.User)
-                .Where(r => r.OfficeId == officeId && r.ReviStatus == Helpers.Enums.ReviewStatus.Approved)
+                .Where(r => r.OfficeId == officeId && r.ReviewStatus == Helpers.Enums.ReviewStatus.Approved)
                 .Select(r => new OfficeReviewDTO
                 {
                     Id = r.Id,
-
-                    ReviStatus = r.ReviStatus ,
-                    RatingAmount = r.RatingAmount,
+                    
+                    ReviewStatus = r.ReviewStatus.ToString(),
+                    StarsReview = r.RatingAmount,
                     TotalReviewsForOffice = r.TotalReviewsForOffice ,
                     OfficeId = r.OfficeId,
                     UserId = r.UserId,

@@ -156,7 +156,7 @@ namespace Car_Picker_API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ReviStatus")
+                    b.Property<int>("ReviewStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewContent")
@@ -434,7 +434,7 @@ namespace Car_Picker_API.Migrations
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReviStatus")
+                    b.Property<int>("ReviewStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewContent")

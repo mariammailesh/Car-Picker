@@ -42,7 +42,7 @@ namespace Car_Picker_API.Services
 
         public async Task<IEnumerable<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId)
         {
-            var reviews = _context.CarReviews.Where(r => r.CarId == carId).SingleOrDefault();
+            var reviews = await _context.CarReviews.Where(r => r.CarId == carId).SingleOrDefaultAsync();
             if (reviews == null)
                 throw new KeyNotFoundException("Review was not foung.");
             

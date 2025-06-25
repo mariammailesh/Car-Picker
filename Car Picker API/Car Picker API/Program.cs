@@ -26,6 +26,8 @@ builder.Services.AddScoped<IBookingInterface, BookingAppServices>();
 builder.Services.AddScoped<ICarServices, CarServices>();
 builder.Services.AddScoped<IOfficeService, OfficeService>();
 builder.Services.AddScoped<ICategoriesInterface, CategoriesServices>();
+builder.Services.AddScoped<ICarReview, CarReviewService>();
+builder.Services.AddScoped<IOfficeReview, OfficeReviewService>();
 
 
 var app = builder.Build();
