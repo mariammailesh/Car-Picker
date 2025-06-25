@@ -66,7 +66,7 @@
                     IsVerified = false,
                     IsActive = true,
                     RoleId = Helpers.Enums.Role.Client,
-                    OTPCode = new Random().Next(11111, 99999).ToString(),
+                    OTPCode = new Random().Next(1111, 9999).ToString(),
                     OTPExpiry = DateTime.Now.AddMinutes(5)
 
                 };
@@ -131,7 +131,7 @@
                 if (user == null)
                     return "User not found";
 
-                var otp = new Random().Next(11111, 99999).ToString();
+                var otp = new Random().Next(1111, 9999).ToString();
                 user.OTPCode = otp;
                 user.OTPExpiry = DateTime.Now.AddMinutes(5);
 
@@ -151,7 +151,7 @@
                     return false;
                 }
                 Random otp = new Random();
-                user.OTPCode = otp.Next(11111, 99999).ToString();
+                user.OTPCode = otp.Next(1111, 9999).ToString();
                 user.OTPExpiry = DateTime.Now.AddMinutes(3);
                 await MailingHelper.SendEmail(email, user.OTPCode, "Reset Password OTP", "Complete Reset Password");
 
