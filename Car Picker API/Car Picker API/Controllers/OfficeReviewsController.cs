@@ -1,29 +1,29 @@
-﻿using Car_Picker_API.DTOs.Car_Review_DTO.Response;
-using Car_Picker_API.DTOs.Review_DTO.Request;
+﻿using Car_Picker_API.DTOs.Office_Review_DTO.Request;
+using Car_Picker_API.DTOs.Office_Review_DTO.Response;
 using Car_Picker_API.Helpers.Enums;
 using Car_Picker_API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Car_Picker_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewsController : ControllerBase
+    public class OfficeReviewsController : ControllerBase
     {
-        private readonly ICarReview _carReviewService;
-        public ReviewsController(ICarReview carReviewService)
+        private readonly IOfficeReview _officeReviewService;
+        public OfficeReviewsController(IOfficeReview officeReviewService)
         {
-            _carReviewService = carReviewService;
+            _officeReviewService = officeReviewService;
         }
+
 
         [HttpGet("Get-Review-By-Id/{reviewId}")]
         public async Task<IActionResult> GetReviewById(int reviewId)
         {
             try
             {
-                var review = await _carReviewService.GetReviewByIdAsync(reviewId);
+                var review = await _officeReviewService.GetReviewByIdAsync(reviewId);
                 return StatusCode(200);
             }
             catch (Exception ex)
@@ -31,12 +31,12 @@ namespace Car_Picker_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpGet("Get-All-Reviews-By-CarId/{carId}")]
-        public async Task<IActionResult> GetAllReviewsByCarId(int carId)
+        [HttpGet("Get-All-Reviews-By-OfficeId/{officeId}")]
+        public async Task<IActionResult> GetAllReviewsByOfficeId(int officeId)
         {
             try
             {
-                IEnumerable<ResponseCarReviewDTO> reviews = await _carReviewService.GetAllReviewsByCarIdAsync(carId);
+                IEnumerable<ResponseOfficeReviewDTO> reviews = await _officeReviewService.GetAllReviewsByOfficeIdAsync(officeId);
                 return StatusCode(200);
             }
             catch (Exception ex)
@@ -45,11 +45,11 @@ namespace Car_Picker_API.Controllers
             }
         }
         [HttpPost("Create-Review")]
-        public async Task<IActionResult> CreateReview([FromBody] RequestCarReviewDTO input)
+        public async Task<IActionResult> CreateReview([FromBody] RequestOfficeReviewDTO input)
         {
             try
             {
-                string response = await _carReviewService.CreateReviewAsync(input);
+                string response = await _officeReviewService.CreateReviewAsync(input);
                 return StatusCode(201, response);
             }
             catch (Exception ex)
@@ -58,11 +58,11 @@ namespace Car_Picker_API.Controllers
             }
         }
         [HttpPut("Update-Review")]
-        public async Task<IActionResult> UpdateReview([FromBody] RequestCarReviewDTO updatedReview)
+        public async Task<IActionResult> UpdateReview([FromBody] RequestOfficeReviewDTO updatedReview)
         {
             try
             {
-                string response = await _carReviewService.UpdateReviewAsync(updatedReview);
+                string response = await _officeReviewService.UpdateReviewAsync(updatedReview);
                 return StatusCode(200, response);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                bool isDeleted = await _carReviewService.DeleteReviewAsync(reviewId);
+                bool isDeleted = await _officeReviewService.DeleteReviewAsync(reviewId);
                 if (isDeleted)
                 {
                     return StatusCode(200, "Review deleted successfully.");
@@ -87,12 +87,12 @@ namespace Car_Picker_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpGet("Get-Average-Rating-For-Car/{carId}")]
-        public async Task<IActionResult> GetAverageRatingForCar(int carId)
+        [HttpGet("Get-Average-Rating-For-Office/{officeId}")]
+        public async Task<IActionResult> GetAverageRatingForOffice(int officeId)
         {
             try
             {
-                float averageRating = await _carReviewService.GetAverageRatingForCarAsync(carId);
+                float averageRating = await _officeReviewService.GetAverageRatingForOfficeAsync(OfficeId);
                 return StatusCode(200, averageRating);
             }
             catch (Exception ex)
@@ -106,7 +106,7 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                bool isUpdated = await _carReviewService.UpdateReviewStatusAsync(reviewId, newStatus);
+                bool isUpdated = await _officeReviewService.UpdateReviewStatusAsync(reviewId, newStatus);
                 if (isUpdated)
                 {
                     return StatusCode(200, "Review status updated successfully.");
@@ -119,8 +119,18 @@ namespace Car_Picker_API.Controllers
             }
         }
 
-
-
-
+        [HttpGet("Get-Review-Count-By-OfficeId/{officeId}")]
+        public async Task<IActionResult> GetReviewCountByOfficeId(int officeId)
+        {
+            try
+            {
+                var count = await _officeReviewService.GetAllReviewsByOfficeIdAsync(officeId);
+                return StatusCode(200, count.Count());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

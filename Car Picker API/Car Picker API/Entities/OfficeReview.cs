@@ -6,7 +6,7 @@ namespace Car_Picker_API.Entities
     {
        
         public string ReviewContent { get; set; } // Content of the review
-        public ReviewStatus ReviStatus { get; set; } = ReviewStatus.Pending; // Enum for review status (Pending, Approved, Rejected)
+        public ReviewStatus ReviewStatus { get; set; } = ReviewStatus.Pending; // Enum for review status (Pending, Approved, Rejected)
         public short RatingAmount { get; set; } = 1;
 
         public int TotalReviewsForOffice { get; set; }

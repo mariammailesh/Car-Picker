@@ -69,12 +69,12 @@ namespace Car_Picker_API.Services
         {
             var reviews = await _context.OfficeReviews
                 .Include(r => r.User)
-                .Where(r => r.OfficeId == officeId && r.ReviStatus == Helpers.Enums.ReviewStatus.Approved)
+                .Where(r => r.OfficeId == officeId && r.ReviewStatus == Helpers.Enums.ReviewStatus.Approved)
                 .Select(r => new OfficeReviewDTO
                 {
                     Id = r.Id,
                     
-                    ReviewStatus = r.ReviStatus.ToString(),
+                    ReviewStatus = r.ReviewStatus.ToString(),
                     StarsReview = r.StarsReview,
                     TotalReviewsForOffice = r.TotalReviewsForOffice ,
                     OfficeId = r.OfficeId,
