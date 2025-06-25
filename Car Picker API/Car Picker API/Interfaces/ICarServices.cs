@@ -24,7 +24,7 @@ namespace Car_Picker_API.Interfaces
 
 
         Task<bool> CheckCarAvailability(int carId, DateTime startDate, DateTime endDate);
-        Task<List<CarByOfficeDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending);
+        Task<List<CarFilterDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending);
 
 
 
