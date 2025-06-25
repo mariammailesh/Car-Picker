@@ -53,5 +53,23 @@ namespace Car_Picker_API.Controllers
             }
         }
 
+
+
+        [HttpGet("Get-Offices-Info")]
+        public async Task<IActionResult> GetOfficesIfo()
+        {
+            try
+            {
+                var result = await _officeService.GetOfficesInfo();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+ 
+
+
     }
 }

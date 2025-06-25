@@ -63,9 +63,29 @@ namespace Car_Picker_API.Services
 
 
 
-
-
+        public async Task<List<GetOfficeInfoDTO>> GetOfficesInfo()
+        {
+            return await _context.Offices
+                .Where(o => o.IsActive)
+                .Select(o => new GetOfficeInfoDTO
+                {
+                    Id = o.Id,
+                    OfficeName = o.OfficeName,
+                    ReservationsCount = o.Reservations.Count,
+                    OfficeCategory = o.OfficeCategory.ToString(),
+                    OfficeAddress = o.OfficeAddress,
+                    OfficePhoneNumber = o.OfficePhoneNumber,
+                    AverageStarsReview = o.OfficeReviews.Any()
+                ? o.OfficeReviews.Average(r => (double?)r.RatingAmount) ?? 0
+                : 0,
+                    OfficeDescription = o.OfficeDescription,
+                    OfficeImageUrl = o.OfficeImageUrl
+                })
+                .ToListAsync();
+        }
     }
 
-
 }
+
+
+
