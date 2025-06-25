@@ -32,7 +32,7 @@ namespace Car_Picker_API.Services
                     OfficeImageUrl = o.OfficeImageUrl,
 
                     AverageStarsReview = o.OfficeReviews.Any()
-                        ? o.OfficeReviews.Average(r => (int)r.StarsReview)
+                        ? o.OfficeReviews.Average(r => (int)r.RatingAmount)
                         : 0
                 })
                 .ToListAsync();
@@ -73,9 +73,9 @@ namespace Car_Picker_API.Services
                 .Select(r => new OfficeReviewDTO
                 {
                     Id = r.Id,
-                    
-                    ReviewStatus = r.ReviStatus.ToString(),
-                    StarsReview = r.StarsReview,
+
+                    ReviStatus = r.ReviStatus ,
+                    RatingAmount = r.RatingAmount,
                     TotalReviewsForOffice = r.TotalReviewsForOffice ,
                     OfficeId = r.OfficeId,
                     UserId = r.UserId,

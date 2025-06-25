@@ -239,12 +239,12 @@ namespace Car_Picker_API.Services
         public async Task<List<CarReviewDTO>> GetCarReviews(int carId)
         {
             return await _context.CarReviews
-                .Where(r => r.CarId == carId && r.ReviStatus == ReviewStatus.Approved)
+                .Where(r => r.CarId == carId && r.ReviewStatus == ReviewStatus.Approved)
                 .Select(r => new CarReviewDTO
                 {
                     
                     ReviewContent = r.ReviewContent,
-                    StarsReview = (int)r.StarsReview,
+                    RatingAmount = (int)r.RatingAmount,
                     UserName = r.User.FullName,
 
                     Date = r.CreationDate
@@ -270,8 +270,8 @@ namespace Car_Picker_API.Services
                     : query.OrderBy(c => c.RentalPricePerDay ?? c.SalePrice),
 
                 SortByOption.Rating => descending
-                    ? query.OrderByDescending(c => c.CarReviews.Average(r => (int?)r.StarsReview) ?? 0)
-                    : query.OrderBy(c => c.CarReviews.Average(r => (int?)r.StarsReview) ?? 0),
+                    ? query.OrderByDescending(c => c.CarReviews.Average(r => (int?)r.RatingAmount) ?? 0)
+                    : query.OrderBy(c => c.CarReviews.Average(r => (int?)r.RatingAmount) ?? 0),
 
                 SortByOption.Date => descending
                     ? query.OrderByDescending(c => c.CreationDate)
