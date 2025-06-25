@@ -91,7 +91,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("OfficeId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.CarImage", b =>
@@ -129,7 +129,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("CarImages");
+                    b.ToTable("CarImages", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.CarReview", b =>
@@ -177,7 +177,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CarReviews");
+                    b.ToTable("CarReviews", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.CarSpecs", b =>
@@ -234,7 +234,7 @@ namespace Car_Picker_API.Migrations
                     b.HasIndex("CarId")
                         .IsUnique();
 
-                    b.ToTable("CarSpecs");
+                    b.ToTable("CarSpecs", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.LookupItem", b =>
@@ -272,7 +272,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("LookupTypeId");
 
-                    b.ToTable("LookupItems");
+                    b.ToTable("LookupItems", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.LookupType", b =>
@@ -305,7 +305,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LookupTypes");
+                    b.ToTable("LookupTypes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.Office", b =>
@@ -364,7 +364,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Offices");
+                    b.ToTable("Offices", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.OfficeImage", b =>
@@ -402,7 +402,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("OfficeId");
 
-                    b.ToTable("OfficeImages");
+                    b.ToTable("OfficeImages", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.OfficeReview", b =>
@@ -454,7 +454,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("OfficeReviews");
+                    b.ToTable("OfficeReviews", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.Payment", b =>
@@ -510,7 +510,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.Reservation", b =>
@@ -543,7 +543,7 @@ namespace Car_Picker_API.Migrations
                     b.Property<bool>("IsDeliveredCar")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OfficeId")
+                    b.Property<int?>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<string>("PickupLocation")
@@ -572,7 +572,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.User", b =>
@@ -657,7 +657,7 @@ namespace Car_Picker_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.Car", b =>
@@ -757,8 +757,7 @@ namespace Car_Picker_API.Migrations
                 {
                     b.HasOne("Car_Picker_API.Entities.Reservation", "Reservation")
                         .WithOne("Payment")
-                        .HasForeignKey("Car_Picker_API.Entities.Payment", "ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Car_Picker_API.Entities.Payment", "ReservationId");
 
                     b.HasOne("Car_Picker_API.Entities.User", "User")
                         .WithMany("Payments")
@@ -779,11 +778,9 @@ namespace Car_Picker_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Car_Picker_API.Entities.Office", "Office")
+                    b.HasOne("Car_Picker_API.Entities.Office", null)
                         .WithMany("Reservations")
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("OfficeId");
 
                     b.HasOne("Car_Picker_API.Entities.User", "User")
                         .WithMany("Reservations")
@@ -792,8 +789,6 @@ namespace Car_Picker_API.Migrations
                         .IsRequired();
 
                     b.Navigation("Car");
-
-                    b.Navigation("Office");
 
                     b.Navigation("User");
                 });
