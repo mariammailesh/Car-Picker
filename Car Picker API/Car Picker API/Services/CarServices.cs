@@ -210,9 +210,6 @@ namespace Car_Picker_API.Services
                 .ToListAsync();
         }
 
-
-
-
         // Check car Availability 
         public async Task<bool> CheckCarAvailability(int carId, DateTime startDate, DateTime endDate)
         {
@@ -233,28 +230,6 @@ namespace Car_Picker_API.Services
 
             return !isBooked;
         }
-
-
-
-        public async Task<List<CarReviewDTO>> GetCarReviews(int carId)
-        {
-            return await _context.CarReviews
-                .Where(r => r.CarId == carId && r.ReviewStatus == ReviewStatus.Approved)
-                .Select(r => new CarReviewDTO
-                {
-                    
-                    ReviewContent = r.ReviewContent,
-                    RatingAmount = (int)r.RatingAmount,
-                    UserName = r.User.FullName,
-
-                    Date = r.CreationDate
-                }).ToListAsync();
-        }
-
-
-
-
-
 
         public async Task<List<CarByOfficeDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending)
         {

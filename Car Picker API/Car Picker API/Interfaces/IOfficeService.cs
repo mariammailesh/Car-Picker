@@ -7,7 +7,6 @@ namespace Car_Picker_API.Interfaces
     {
         Task<List<OfficeDTO>> GetAllOfficesAsync();
         Task<List<OfficeDTO>> GetOfficesByCategoryAsync(OfficesCategory category);
-        Task<List<OfficeReviewDTO>> GetOfficeReviewsByOfficeIdAsync(int officeId);
 
 
     }

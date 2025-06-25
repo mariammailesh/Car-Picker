@@ -193,30 +193,6 @@ namespace Car_Picker_API.Controllers
 
 
 
-
-        [HttpGet("{carId}/reviews")]
-        public async Task<IActionResult> GetCarReviews(int carId)
-        {
-            try
-            {
-                var result = await _carService.GetCarReviews(carId);
-
-                if (result == null || !result.Any())
-                    return NotFound("No reviews found for this car.");
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-
-
-
-
         [HttpGet("filter")]
         public async Task<IActionResult> FilterCars(
             [FromQuery] OfficesCategory category,
