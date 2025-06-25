@@ -226,7 +226,7 @@ namespace Car_Picker_API.Controllers
             }
         }
 
-       
+
 
 
         [HttpGet("Get-Rent-Cars-By-Office/{officeId}")]
@@ -247,7 +247,6 @@ namespace Car_Picker_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
 
 
 

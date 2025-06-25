@@ -10,9 +10,12 @@ namespace Car_Picker_API.Interfaces
         Task<List<CarByOfficeForSaleDTO>> GetCarsByOfficeIdForSale(int officeId);
         Task<CarGeneralInfoDTO> GetCarGeneralInfo(int carId);
 
-        Task<List<CarGeneralInfoDTO>> GetCarsForSale();
+        Task<List<CarByOfficeForSaleDTO>> GetCarsForSale();
 
-        Task<List<CarGeneralInfoDTO>> GetCarsForRent();
+
+        Task<List<GetCarsForRentByOfficeId>> GetCarsForRent();
+
+
 
         Task<List<CarImageDTO>> GetCarImages(int carId);
 
@@ -27,7 +30,6 @@ namespace Car_Picker_API.Interfaces
         Task<List<CarFilterDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending);
 
         Task<List<GetCarsForRentByOfficeId>> GetCarsForRentByOfficeId(int officeId);
-
 
     }
 }
