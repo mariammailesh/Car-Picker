@@ -233,6 +233,22 @@ namespace Car_Picker_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
+        [HttpGet("ForRent")]
+        public async Task<IActionResult> GetCarsForRent()
+        {
+            try
+            {
+                var cars = await _carService.GetCarsForRent();
+                return Ok(cars);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 
 }

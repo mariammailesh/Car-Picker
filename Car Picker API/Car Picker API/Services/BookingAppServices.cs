@@ -20,6 +20,9 @@ namespace Car_Picker_API.Services
             if (input == null)
                 throw new ArgumentNullException(nameof(input), "Booking details cannot be null.");
 
+            var car = await _context.Cars.FindAsync(input.CarId);
+            if (car == null)
+                throw new Exception("Car not found");
 
             var reservation = new Reservation
             {
@@ -27,6 +30,11 @@ namespace Car_Picker_API.Services
                 EndDate = input.EndDate,
                 UserId = input.UserId,
                 CarId = input.CarId,
+                OfficeId = car.OfficeId,
+                CreatedBy = "System",
+                UpdatedBy = "System",
+                UpdateDate = DateTime.Now,
+                CreationDate = DateTime.Now,
                 ReservationStatus = Helpers.Enums.ReservationStatus.Pending
             };
 
@@ -61,20 +69,25 @@ namespace Car_Picker_API.Services
         public async Task<List<GetMyBookingsDTO>> GetMyBookings(int userId)
         {
             var reservations = await _context.Reservations
-            .Include(r => r.Car)
-            .Where(r => r.UserId == userId)
-            .ToListAsync();
+         .Include(r => r.Car)
+         .Where(r => r.UserId == userId)
+         .ToListAsync();
 
-            return reservations.Select(r => new GetMyBookingsDTO
-            {
-                UserId = r.UserId,
-                CarId = r.CarId,
-                StartDate = r.StartDate,
-                EndDate = r.EndDate,
-                IsDeliveredCar = r.IsDeliveredCar,
-                Model = r.Car.Model,
-                ReservationStatus = r.ReservationStatus.ToString()
-            }).ToList();
+            var filtered = reservations
+                .Where(r => r.Car != null && r.Car.IsActive)
+                .Select(r => new GetMyBookingsDTO
+                {
+                    UserId = r.UserId,
+                    CarId = r.CarId,
+                    StartDate = r.StartDate,
+                    EndDate = r.EndDate,
+                    IsDeliveredCar = r.IsDeliveredCar,
+                    Model = r.Car.Model,
+                    ReservationStatus = r.ReservationStatus.ToString()
+                })
+                .ToList();
+
+            return filtered;
 
         }
 
@@ -111,16 +124,6 @@ namespace Car_Picker_API.Services
             return true;
         }
 
-        public async Task<bool> DeleteBooking(int reservationId)
-        {
-            var reservation = await _context.Reservations.FindAsync(reservationId);
-            if (reservation == null)
-            {
-                throw new KeyNotFoundException("Reservation not found.");
-            }
-            _context.Reservations.Remove(reservation);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+       
     }
 }

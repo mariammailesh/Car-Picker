@@ -108,35 +108,7 @@ namespace Car_Picker_API.Controllers
         }
 
 
-        [HttpDelete("[action]")]
-        public async Task<IActionResult> DeleteBooking(int reservationId)
-        {
-            try
-            {
-                var response = await _bookingService.DeleteBooking(reservationId);
-                return Ok(new
-                {
-                    message = "Booking deleted successfully",
-                    data = response
-                });
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    message = "Error deleting booking",
-                    details = ex.Message
-                });
-            }
-
-        }
+        
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using Car_Picker_API.DTOs;
+using Car_Picker_API.DTOs;
 using Car_Picker_API.Helpers.Enums;
 using Car_Picker_API.Interfaces;
 using CarPicker_API.Context;
@@ -32,7 +32,7 @@ namespace Car_Picker_API.Services
                     OfficeImageUrl = o.OfficeImageUrl,
 
                     AverageStarsReview = o.OfficeReviews.Any()
-                        ? o.OfficeReviews.Average(r => (int)r.StarsReview)
+                        ? o.OfficeReviews.Average(r => (float)r.RatingAmount)
                         : 0
                 })
                 .ToListAsync();
@@ -75,7 +75,7 @@ namespace Car_Picker_API.Services
                     Id = r.Id,
                     
                     ReviewStatus = r.ReviewStatus.ToString(),
-                    StarsReview = r.StarsReview,
+                    StarsReview = r.RatingAmount,
                     TotalReviewsForOffice = r.TotalReviewsForOffice ,
                     OfficeId = r.OfficeId,
                     UserId = r.UserId,
