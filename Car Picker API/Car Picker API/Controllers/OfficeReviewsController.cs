@@ -92,7 +92,7 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                float averageRating = await _officeReviewService.GetAverageRatingForOfficeAsync(OfficeId);
+                float averageRating = await _officeReviewService.GetAverageRatingForOfficeAsync(officeId);
                 return StatusCode(200, averageRating);
             }
             catch (Exception ex)

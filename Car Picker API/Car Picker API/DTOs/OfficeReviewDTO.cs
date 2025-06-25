@@ -5,8 +5,8 @@ namespace Car_Picker_API.DTOs
     public class OfficeReviewDTO
     {
         public int Id { get; set; }
-
-        public ReviewStatus ReviStatus { get; set; } = ReviewStatus.Pending;
+        
+        public string ReviewStatus { get; set; }
 
         public short RatingAmount { get; set; } = 1;
 
