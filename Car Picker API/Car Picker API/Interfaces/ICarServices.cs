@@ -7,7 +7,7 @@ namespace Car_Picker_API.Interfaces
     {
         Task<List<CarByCategoryDTO>> GetCarsByCategoryAsync(int categoryId);
 
-        Task<List<CarByOfficeDTO>> GetCarsByOfficeId(int officeId);
+        Task<List<CarByOfficeForSaleDTO>> GetCarsByOfficeIdForSale(int officeId);
         Task<CarGeneralInfoDTO> GetCarGeneralInfo(int carId);
 
         Task<List<CarGeneralInfoDTO>> GetCarsForSale();
@@ -26,6 +26,7 @@ namespace Car_Picker_API.Interfaces
         Task<bool> CheckCarAvailability(int carId, DateTime startDate, DateTime endDate);
         Task<List<CarFilterDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending);
 
+        Task<List<GetCarsForRentByOfficeId>> GetCarsForRentByOfficeId(int officeId);
 
 
     }
