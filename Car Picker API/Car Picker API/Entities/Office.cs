@@ -11,6 +11,8 @@ namespace Car_Picker_API.Entities
         public string OfficePhoneNumber { get; set; } // Phone number of the office
         public string OfficeEmail { get; set; } // Email address of the office
         public string OfficeDescription { get; set; } // Description of the office
+        public string OfficeImageUrl { get; set; }
+
 
         // Navigation properties
         public ICollection<Car> Cars { get; set; } // Navigation property to Cars
@@ -19,7 +21,6 @@ namespace Car_Picker_API.Entities
         public ICollection<OfficeReview> OfficeReviews { get; set; } // Navigation property to OfficeReviews
 
 
-        public string OfficeImageUrl { get; set; }
 
     }
 }

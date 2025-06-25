@@ -4,6 +4,7 @@ using CarPicker_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Picker_API.Migrations
 {
     [DbContext(typeof(CarPickerDbContext))]
-    partial class CarPickerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624224650_AddOfficeIdWithRestrictCascade")]
+    partial class AddOfficeIdWithRestrictCascade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,13 +156,18 @@ namespace Car_Picker_API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<short>("RatingAmount")
-                        .HasColumnType("smallint");
+                    b.Property<int>("ReviStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReviewContent")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReviewStatus")
+                    b.Property<string>("ReviewTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StarsReview")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -426,14 +434,18 @@ namespace Car_Picker_API.Migrations
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<short>("RatingAmount")
-                        .HasColumnType("smallint");
+                    b.Property<int>("ReviStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReviewContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReviewStatus")
+                    b.Property<string>("ReviewTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StarsReview")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalReviewsForOffice")
@@ -646,8 +658,8 @@ namespace Car_Picker_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<short>("RoleId")
-                        .HasColumnType("smallint");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
