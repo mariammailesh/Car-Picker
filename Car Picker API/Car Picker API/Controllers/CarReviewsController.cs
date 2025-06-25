@@ -12,15 +12,11 @@ namespace Car_Picker_API.Controllers
     public class CarReviewsController : ControllerBase
     {
         private readonly ICarReview _carReviewService;
-        private readonly IOfficeReview _officeReviewService;
         public CarReviewsController(ICarReview carReviewService)
         {
             _carReviewService = carReviewService;
         }
-        public CarReviewsController(IOfficeReview officeReviewService)
-        {
-            _officeReviewService = officeReviewService;
-        }
+     
 
 
         [HttpGet("Get-Review-By-Id/{reviewId}")]

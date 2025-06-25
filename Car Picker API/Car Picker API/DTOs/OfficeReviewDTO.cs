@@ -8,7 +8,7 @@ namespace Car_Picker_API.DTOs
         
         public string ReviewStatus { get; set; }
 
-        public StarsReview StarsReview { get; set; } = StarsReview.Average;
+        public short StarsReview { get; set; } = 1;
 
         public int OfficeId { get; set; }
         public int UserId { get; set; }
