@@ -233,7 +233,7 @@ namespace Car_Picker_API.Services
             IQueryable<Car> query = _context.Cars
                 .Where(c => c.Office.OfficeCategory == category
                             && c.IsActive
-                            && c.CarPurpose == CarPurpose.ForSale) // ⬅️ فقط سيارات للبيع
+                            && c.CarPurpose == CarPurpose.ForSale) 
                 .Include(c => c.CarReviews)
                 .Include(c => c.CarImages);
 
@@ -263,9 +263,8 @@ namespace Car_Picker_API.Services
                 Id = c.Id,
                 BrandName = c.BrandName,
                 
-                
                 SalePrice = c.SalePrice,
-                CarPurpose = c.CarPurpose.ToString(),
+                Year = c.Year,
                 ImageUrl = c.CarImages.Select(img => img.imageURL).FirstOrDefault()
             }).ToListAsync();
         }
