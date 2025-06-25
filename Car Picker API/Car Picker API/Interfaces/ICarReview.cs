@@ -8,7 +8,7 @@ namespace Car_Picker_API.Interfaces
     public interface ICarReview
     {
         Task<ResponseCarReviewDTO> GetReviewByIdAsync(int reviewId);
-        Task<IEnumerable<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId);
+        Task<List<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId);
         Task<string> CreateReviewAsync(RequestCarReviewDTO input);
         Task<string> UpdateReviewAsync(RequestCarReviewDTO updatedReview);
         Task<bool> DeleteReviewAsync(int reviewId);

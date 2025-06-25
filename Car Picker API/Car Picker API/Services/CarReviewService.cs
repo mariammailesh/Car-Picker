@@ -40,7 +40,7 @@ namespace Car_Picker_API.Services
             return review;
         } //done
 
-        public async Task<IEnumerable<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId)
+        public async Task<List<ResponseCarReviewDTO>> GetAllReviewsByCarIdAsync(int carId)
         {
             var reviews = await _context.CarReviews.Where(r => r.CarId == carId).SingleOrDefaultAsync();
             if (reviews == null)
@@ -68,6 +68,8 @@ namespace Car_Picker_API.Services
                 carReview.RatingAmount = input.RatingAmount;
                 carReview.CarId = input.CarId;
                 carReview.UserId = input.UserId;
+                carReview.CreatedBy = input.UserId.ToString(); // Assuming the user creating the review is the same as the one providing the input
+
                 _context.CarReviews.Add(carReview);
                 await _context.SaveChangesAsync();
                 return "Car Review Created Successfully";
