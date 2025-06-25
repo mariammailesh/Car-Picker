@@ -52,9 +52,7 @@ namespace Car_Picker_API.Services
                 {
                     Id = o.Id,
                     OfficeName = o.OfficeName,
-                    OfficeAddress = o.OfficeAddress,
-                    OfficePhoneNumber = o.OfficePhoneNumber,
-                    OfficeDescription = o.OfficeDescription,
+                    
                     ReservationsCount = o.ReservationsCount,
                     OfficeCategory = o.OfficeCategory.ToString(),
                     OfficeImageUrl = o.OfficeImageUrl
