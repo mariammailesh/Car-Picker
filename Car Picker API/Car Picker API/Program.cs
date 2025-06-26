@@ -16,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //DB Context configuration injection
 builder.Services.AddDbContext<CarPickerDbContext>(options =>
-options.UseSqlServer("Data Source=REEM-NAEL\\SQLEXPRESS02;Initial Catalog=CarPickerDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+options.UseSqlServer("Data Source=DESKTOP-N91Q09L\\SQLEXPRESS;Initial Catalog=CarPickerDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
 
 //options.UseSqlServer("Data Source=REEM-NAEL\\SQLEXPRESS02;Initial Catalog=CarPickerDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
 
