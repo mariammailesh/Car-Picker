@@ -41,8 +41,8 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                List<ResponseCarReviewDTO> reviews = await _carReviewService.GetAllReviewsByCarIdAsync(carId);
-                return Ok(reviews);
+                IEnumerable<ResponseCarReviewDTO> reviews = await _carReviewService.GetAllReviewsByCarIdAsync(carId);
+                return StatusCode(200);
             }
             catch (Exception ex)
             {

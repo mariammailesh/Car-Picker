@@ -88,7 +88,7 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                var result = await _officeService.GetOfficesInfo();
+                var result = await _officeService.GetOfficesInfo(); 
                 return Ok(result);
             }
             catch (Exception ex)
