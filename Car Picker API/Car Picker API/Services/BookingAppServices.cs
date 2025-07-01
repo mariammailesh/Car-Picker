@@ -24,18 +24,25 @@ namespace Car_Picker_API.Services
             if (car == null)
                 throw new Exception("Car not found");
 
+            if (input.TotalDays <= 0)
+                throw new Exception("Total days must be greater than zero.");
+
+         
+            var startDate = DateTime.Now.Date;
+            var endDate = startDate.AddDays(input.TotalDays);
+
             var reservation = new Reservation
             {
-                StartDate = input.StartDate,
-                EndDate = input.EndDate,
+                StartDate = startDate,
+                EndDate = endDate,
                 UserId = input.UserId,
                 CarId = input.CarId,
                 OfficeId = car.OfficeId,
                 CreatedBy = "System",
                 UpdatedBy = "System",
-                UpdateDate = DateTime.Now,
                 CreationDate = DateTime.Now,
-                ReservationStatus = Helpers.Enums.ReservationStatus.Pending
+                UpdateDate = DateTime.Now,
+                ReservationStatus = ReservationStatus.Pending
             };
 
             _context.Reservations.Add(reservation);
@@ -45,7 +52,7 @@ namespace Car_Picker_API.Services
             {
                 PaymentDate = DateTime.Now,
                 Amount = 0,
-                PaymentStatus = Helpers.Enums.PaymentStatus.Pending,
+                PaymentStatus = PaymentStatus.Pending,
                 PaymentMethod = input.PaymentMethod,
                 ReservationId = reservation.Id,
                 UserId = input.UserId,
@@ -62,7 +69,9 @@ namespace Car_Picker_API.Services
             {
                 message = "Booking and payment created successfully",
                 reservationId = reservation.Id,
-                paymentId = payment.Id
+                paymentId = payment.Id,
+                startDate = startDate,
+                endDate = endDate
             };
         }
 
@@ -79,8 +88,7 @@ namespace Car_Picker_API.Services
                 {
                     UserId = r.UserId,
                     CarId = r.CarId,
-                    StartDate = r.StartDate,
-                    EndDate = r.EndDate,
+                    TotalDays = (r.EndDate - r.StartDate).Days,
                     IsDeliveredCar = r.IsDeliveredCar,
                     Model = r.Car.Model,
                     ReservationStatus = r.ReservationStatus.ToString()

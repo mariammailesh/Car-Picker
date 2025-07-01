@@ -24,82 +24,137 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var review = await _officeReviewService.GetReviewByIdAsync(reviewId);
-                return StatusCode(200);
+                return Ok(review);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving review",
+                    details = ex.Message
+                });
             }
         }
+
+
         [HttpGet("Get-All-Reviews-By-OfficeId/{officeId}")]
         public async Task<IActionResult> GetAllReviewsByOfficeId(int officeId)
         {
             try
             {
                 IEnumerable<ResponseOfficeReviewDTO> reviews = await _officeReviewService.GetAllReviewsByOfficeIdAsync(officeId);
-                return StatusCode(200);
+                return Ok(reviews);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving reviews",
+                    details = ex.Message
+                });
             }
         }
+
+
         [HttpPost("Create-Review")]
         public async Task<IActionResult> CreateReview([FromBody] RequestOfficeReviewDTO input)
         {
             try
             {
                 string response = await _officeReviewService.CreateReviewAsync(input);
-                return StatusCode(201, response);
+
+                return StatusCode(201, new
+                {
+                    message = "Review created successfully",
+                    data = response
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException.Message);
             }
         }
+
+
         [HttpPut("Update-Review")]
         public async Task<IActionResult> UpdateReview([FromBody] RequestOfficeReviewDTO updatedReview)
         {
             try
             {
                 string response = await _officeReviewService.UpdateReviewAsync(updatedReview);
-                return StatusCode(200, response);
+
+                return Ok(new
+                {
+                    message = "Review updated successfully",
+                    data = response
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error updating review",
+                    details = ex.Message
+                });
             }
         }
+
+
         [HttpDelete("Delete-Review/{reviewId}")]
         public async Task<IActionResult> DeleteReview(int reviewId)
         {
             try
             {
                 bool isDeleted = await _officeReviewService.DeleteReviewAsync(reviewId);
+
                 if (isDeleted)
                 {
-                    return StatusCode(200, "Review deleted successfully.");
+                    return Ok(new
+                    {
+                        message = "Review deleted successfully"
+                    });
                 }
-                return StatusCode(404, "Review not found.");
+
+                return NotFound(new
+                {
+                    message = "Review not found"
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error deleting review",
+                    details = ex.Message
+                });
             }
         }
+
+
         [HttpGet("Get-Average-Rating-For-Office/{officeId}")]
         public async Task<IActionResult> GetAverageRatingForOffice(int officeId)
         {
             try
             {
                 float averageRating = await _officeReviewService.GetAverageRatingForOfficeAsync(officeId);
-                return StatusCode(200, averageRating);
+
+                return Ok(new
+                {
+                    message = "Average rating retrieved successfully",
+                    data = averageRating
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving average rating",
+                    details = ex.Message
+                });
             }
         }
+
+
         [HttpPut("Update-Review-Status/{reviewId}")]
         [Authorize(Roles = "1,2")]
         public async Task<IActionResult> UpdateReviewStatus(int reviewId, [FromBody] ReviewStatus newStatus)
@@ -107,15 +162,27 @@ namespace Car_Picker_API.Controllers
             try
             {
                 bool isUpdated = await _officeReviewService.UpdateReviewStatusAsync(reviewId, newStatus);
+
                 if (isUpdated)
                 {
-                    return StatusCode(200, "Review status updated successfully.");
+                    return Ok(new
+                    {
+                        message = "Review status updated successfully"
+                    });
                 }
-                return StatusCode(404, "Review not found.");
+
+                return NotFound(new
+                {
+                    message = "Review not found"
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error updating review status",
+                    details = ex.Message
+                });
             }
         }
 
@@ -124,12 +191,22 @@ namespace Car_Picker_API.Controllers
         {
             try
             {
-                var count = await _officeReviewService.GetAllReviewsByOfficeIdAsync(officeId);
-                return StatusCode(200, count.Count());
+                var reviews = await _officeReviewService.GetAllReviewsByOfficeIdAsync(officeId);
+                int count = reviews?.Count() ?? 0;
+
+                return Ok(new
+                {
+                    message = "Review count retrieved successfully",
+                    data = count
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving review count",
+                    details = ex.Message
+                });
             }
         }
     }

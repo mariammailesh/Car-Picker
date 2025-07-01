@@ -165,6 +165,7 @@
             {
                 if (input == null || string.IsNullOrWhiteSpace(input.Email)
                  || string.IsNullOrWhiteSpace(input.Password)
+                 || string.IsNullOrWhiteSpace(input.ConfirmPassword)
                  || string.IsNullOrWhiteSpace(input.OTPCode))
 
                 {
@@ -184,8 +185,13 @@
                 {
                     return false;
                 }
-               
-                user.Password = input.Password;
+
+                if (input.Password != input.ConfirmPassword)
+                {
+                    return false;
+                }
+
+                user.Password = input.ConfirmPassword;
                 user.OTPCode = null;
                 user.OTPExpiry = null;
 

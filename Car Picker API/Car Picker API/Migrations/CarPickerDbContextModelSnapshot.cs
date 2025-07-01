@@ -237,77 +237,6 @@ namespace Car_Picker_API.Migrations
                     b.ToTable("CarSpecs");
                 });
 
-            modelBuilder.Entity("Car_Picker_API.Entities.LookupItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LookupTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LookupTypeId");
-
-                    b.ToTable("LookupItems");
-                });
-
-            modelBuilder.Entity("Car_Picker_API.Entities.LookupType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LookupTypes");
-                });
-
             modelBuilder.Entity("Car_Picker_API.Entities.Office", b =>
                 {
                     b.Property<int>("Id")
@@ -712,17 +641,6 @@ namespace Car_Picker_API.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("Car_Picker_API.Entities.LookupItem", b =>
-                {
-                    b.HasOne("Car_Picker_API.Entities.LookupType", "LookupType")
-                        .WithMany("LookupItems")
-                        .HasForeignKey("LookupTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LookupType");
-                });
-
             modelBuilder.Entity("Car_Picker_API.Entities.OfficeImage", b =>
                 {
                     b.HasOne("Car_Picker_API.Entities.Office", "Office")
@@ -808,11 +726,6 @@ namespace Car_Picker_API.Migrations
                         .IsRequired();
 
                     b.Navigation("Reservations");
-                });
-
-            modelBuilder.Entity("Car_Picker_API.Entities.LookupType", b =>
-                {
-                    b.Navigation("LookupItems");
                 });
 
             modelBuilder.Entity("Car_Picker_API.Entities.Office", b =>
