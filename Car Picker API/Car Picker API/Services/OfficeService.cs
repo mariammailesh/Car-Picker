@@ -54,10 +54,7 @@ namespace Car_Picker_API.Services
         }
 
 
-
-
-
-    }
-
-
 }
+
+
+
