@@ -33,34 +33,53 @@ namespace Car_Picker_API.Services
                     RentalPricePerDay = c.RentalPricePerDay,
                     SalePrice = c.SalePrice,
                     CarPurpose = c.CarPurpose.ToString(),
-                    
+
                 })
                 .ToListAsync();
         }
 
         // Get Car By Office Id 
-        public async Task<List<CarByOfficeDTO>> GetCarsByOfficeId(int officeId)
+        public async Task<List<CarByOfficeForSaleDTO>> GetCarsByOfficeIdForSale(int officeId)
         {
             return await _context.Cars
-                .Where(c => c.OfficeId == officeId && c.IsActive)
-                .Include(c => c.CarImages) 
-                .Select(c => new CarByOfficeDTO
+                .Where(c => c.OfficeId == officeId && c.IsActive && c.CarPurpose == CarPurpose.ForSale)
+                .Include(c => c.CarImages)
+                .Select(c => new CarByOfficeForSaleDTO
                 {
                     Id = c.Id,
                     BrandName = c.BrandName,
-                    Model = c.Model,
-                    Year = c.Year,
-                    Color = c.Color,
-                    RentalPricePerDay = c.RentalPricePerDay,
+
                     SalePrice = c.SalePrice,
-                    Description = c.Description,
-                    CarPurpose = c.CarPurpose.ToString(),
-
-
+                    Year = c.Year,
                     ImageUrl = c.CarImages.Select(img => img.imageURL).FirstOrDefault()
                 })
                 .ToListAsync();
         }
+
+
+
+
+
+        public async Task<List<GetCarsForRentByOfficeId>> GetCarsForRentByOfficeId(int officeId)
+        {
+            return await _context.Cars
+                .Where(c => c.OfficeId == officeId && c.IsActive && c.CarPurpose == CarPurpose.ForRent)
+                .Include(c => c.CarImages)
+                .Select(c => new GetCarsForRentByOfficeId
+                {
+                    Id = c.Id,
+                    BrandName = c.BrandName,
+
+                    RentalPricePerDay = c.RentalPricePerDay,
+
+                    Year = c.Year,
+                    ImageUrl = c.CarImages.Select(img => img.imageURL).FirstOrDefault()
+                })
+                .ToListAsync();
+        }
+
+
+
 
 
 
@@ -80,7 +99,7 @@ namespace Car_Picker_API.Services
                     RentalPricePerDay = c.RentalPricePerDay,
                     SalePrice = c.SalePrice,
                     Description = c.Description,
-                    CarPurpose = c.CarPurpose.ToString() ,
+                    CarPurpose = c.CarPurpose.ToString(),
 
                     ImageURL = c.CarImages.Select(img => img.imageURL).FirstOrDefault()
 
@@ -120,8 +139,8 @@ namespace Car_Picker_API.Services
                 TransmissionType = specs.TransmissionType.ToString(),
                 PerformanceScore = specs.performanceScore,
                 FuelType = specs.FuelType.ToString(),
-                SeatingCapacity = specs.SeatingCapacity ,
-                
+                SeatingCapacity = specs.SeatingCapacity,
+
             };
         }
 
@@ -168,46 +187,40 @@ namespace Car_Picker_API.Services
 
 
         // Get Car For Sale 
-        public async Task<List<CarGeneralInfoDTO>> GetCarsForSale()
+        public async Task<List<CarByOfficeForSaleDTO>> GetCarsForSale()
         {
-            return await _context.Cars
+            var cars = await _context.Cars
                 .Where(c => c.CarPurpose == CarPurpose.ForSale && c.IsActive)
-                .Select(c => new CarGeneralInfoDTO
-                {
-                    Id = c.Id,
-                    BrandName = c.BrandName,
-                    LicensePlateNumber = c.LicensePlateNumber,
-                    Model = c.Model,
-                    Year = c.Year,
-                    Color = c.Color,
-                    RentalPricePerDay = c.RentalPricePerDay,
-                    SalePrice = c.SalePrice,
-                    Description = c.Description,
-                    CarPurpose = c.CarPurpose.ToString()
-                })
+                .Include(c => c.CarImages)
                 .ToListAsync();
+
+            return cars.Select(c => new CarByOfficeForSaleDTO
+            {
+                Id = c.Id,
+                BrandName = c.BrandName,
+                Year = c.Year,
+                SalePrice = c.SalePrice,
+                ImageUrl = c.CarImages.FirstOrDefault()?.imageURL
+            }).ToList();
         }
 
 
         // Get Cars For Rent
-        public async Task<List<CarGeneralInfoDTO>> GetCarsForRent()
+        public async Task<List<GetCarsForRentByOfficeId>> GetCarsForRent()
         {
-            return await _context.Cars
+            var cars = await _context.Cars
                 .Where(c => c.CarPurpose == CarPurpose.ForRent && c.IsActive)
-                .Select(c => new CarGeneralInfoDTO
-                {
-                    Id = c.Id,
-                    BrandName = c.BrandName,
-                    LicensePlateNumber = c.LicensePlateNumber,
-                    Model = c.Model,
-                    Year = c.Year,
-                    Color = c.Color,
-                    RentalPricePerDay = c.RentalPricePerDay,
-                    SalePrice = c.SalePrice,
-                    Description = c.Description,
-                    CarPurpose = c.CarPurpose.ToString()
-                })
+                .Include(c => c.CarImages)
                 .ToListAsync();
+
+            return cars.Select(c => new GetCarsForRentByOfficeId
+            {
+                Id = c.Id,
+                BrandName = c.BrandName,
+                Year = c.Year,
+                RentalPricePerDay = c.RentalPricePerDay,
+                ImageUrl = c.CarImages.FirstOrDefault()?.imageURL
+            }).ToList();
         }
 
         // Check car Availability 
@@ -231,10 +244,12 @@ namespace Car_Picker_API.Services
             return !isBooked;
         }
 
-        public async Task<List<CarByOfficeDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending)
+        public async Task<List<CarFilterDTO>> GetCarsByCategoryAsync(OfficesCategory category, SortByOption sortBy, bool descending)
         {
             IQueryable<Car> query = _context.Cars
-                .Where(c => c.Office.OfficeCategory == category && c.IsActive)
+                .Where(c => c.Office.OfficeCategory == category
+                            && c.IsActive
+                            && c.CarPurpose == CarPurpose.ForSale)
                 .Include(c => c.CarReviews)
                 .Include(c => c.CarImages);
 
@@ -259,21 +274,17 @@ namespace Car_Picker_API.Services
                 _ => query.OrderBy(c => c.Id)
             };
 
-            return await query.Select(c => new CarByOfficeDTO
+            return await query.Select(c => new CarFilterDTO
             {
                 Id = c.Id,
                 BrandName = c.BrandName,
-                Model = c.Model,
-                Year = c.Year,
-                Color = c.Color,
-                RentalPricePerDay = c.RentalPricePerDay,
+
                 SalePrice = c.SalePrice,
-                Description = c.Description,
-                CarPurpose = c.CarPurpose.ToString(),
+                Year = c.Year,
                 ImageUrl = c.CarImages.Select(img => img.imageURL).FirstOrDefault()
             }).ToListAsync();
         }
     }
 
-}
+    }
 

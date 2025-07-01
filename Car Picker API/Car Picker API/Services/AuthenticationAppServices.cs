@@ -64,12 +64,19 @@
                     UpdatedBy = "System",
                     CreationDate = DateTime.Now,
                     IsVerified = false,
+                    IsLoggedIn = false,
                     IsActive = true,
                     RoleId = Helpers.Enums.Role.Client,
                     OTPCode = new Random().Next(1111, 9999).ToString(),
                     OTPExpiry = DateTime.Now.AddMinutes(5)
 
                 };
+
+                Console.WriteLine("===== SIGN UP =====");
+                Console.WriteLine($"Email: {input.Email}");
+                Console.WriteLine($"Raw Password: {input.Password}");
+                Console.WriteLine($"Hashed Password: {user.Password}");
+
                 await MailingHelper.SendEmail(input.Email, user.OTPCode, "Sign Up  OTP", "Complete Sign Up Operation");
 
                 _context.Users.Add(user);
@@ -125,11 +132,17 @@
                 var hashedPassword = HashingHelper.HashValueWith384(input.Password);
 
                 var user = _context.Users
-                    .Where(u => u.Email == input.Email && u.Password == hashedPassword && u.IsLoggedIn == false)
+                    .Where(u => u.Email == input.Email && u.Password == hashedPassword )
                     .SingleOrDefault();
 
                 if (user == null)
                     return "User not found";
+
+                Console.WriteLine("===== SIGN IN =====");
+                Console.WriteLine($"Email: {input.Email}");
+                Console.WriteLine($"Raw Password: {input.Password}");
+                Console.WriteLine($"Hashed Password: {hashedPassword}");
+
 
                 var otp = new Random().Next(1111, 9999).ToString();
                 user.OTPCode = otp;
@@ -203,7 +216,7 @@
 
             public async Task<bool> SignOut(int userId)
             {
-                var user = _context.Users.Where(u => u.Id == userId && u.IsLoggedIn == true).SingleOrDefault();
+                var user = _context.Users.SingleOrDefault(u => u.Id == userId);
                 if (user == null)
                 {
                     return false;

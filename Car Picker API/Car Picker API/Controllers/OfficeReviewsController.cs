@@ -156,7 +156,7 @@ namespace Car_Picker_API.Controllers
 
 
         [HttpPut("Update-Review-Status/{reviewId}")]
-        [Authorize(Roles = "1,2")]
+//        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> UpdateReviewStatus(int reviewId, [FromBody] ReviewStatus newStatus)
         {
             try
