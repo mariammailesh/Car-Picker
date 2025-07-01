@@ -73,9 +73,24 @@
         }
         public static bool IsValidPassword(string password)
         {
-            if (string.IsNullOrEmpty(password) && password.Length >= 8)
-                throw new Exception("Password Is Required");
+            if (string.IsNullOrWhiteSpace(password))
+                throw new Exception("Password is required");
+
+            if (password.Length < 8)
+                throw new Exception("Password must be at least 8 characters long");
+
+            if (!char.IsUpper(password[0]))
+                throw new Exception("Password must start with an uppercase letter");
+
+            
+            foreach (char c in password)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '_' && c != '*' && c != '$' && c != '@')
+                    throw new Exception("Password contains invalid characters");
+            }
+
             return true;
         }
+
     }
 }

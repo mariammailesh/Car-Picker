@@ -25,14 +25,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var cars = await _carService.GetCarsByCategoryAsync(categoryId);
-                if (cars == null || !cars.Any())
-                    return NotFound("No cars found for this category.");
 
-                return Ok(cars);
+                if (cars == null || !cars.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "No cars found for this category."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Cars retrieved successfully",
+                    data = cars
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving cars",
+                    details = ex.Message
+                });
             }
         }
 
@@ -47,19 +61,28 @@ namespace Car_Picker_API.Controllers
             {
                 var cars = await _carService.GetCarsByOfficeIdForSale(officeId);
                 if (cars == null || !cars.Any())
-                    return NotFound("No cars found for this office.");
+                {
+                    return NotFound(new
+                    {
+                        message = "No cars found for this office."
+                    });
+                }
 
-                return Ok(cars);
+                return Ok(new
+                {
+                    message = "Cars retrieved successfully",
+                    data = cars
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving cars",
+                    details = ex.Message
+                });
             }
         }
-
-
-
-
 
         [HttpGet("{carId}/info")]
         public async Task<IActionResult> GetCarGeneralInfo(int carId)
@@ -67,19 +90,30 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var carInfo = await _carService.GetCarGeneralInfo(carId);
-                if (carInfo == null)
-                    return NotFound($"Car with Id = {carId} not found.");
 
-                return Ok(carInfo);
+                if (carInfo == null)
+                {
+                    return NotFound(new
+                    {
+                        message = $"Car with Id = {carId} not found."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Car info retrieved successfully",
+                    data = carInfo
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
-
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving car info",
+                    details = ex.Message
+                });
             }
         }
-
-
 
 
 
@@ -89,14 +123,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var result = await _carService.GetCarImages(carId);
-                if (result == null || !result.Any())
-                    return NotFound("No images found for this car.");
 
-                return Ok(result);
+                if (result == null || !result.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "No images found for this car."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Car images retrieved successfully",
+                    data = result
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving car images",
+                    details = ex.Message
+                });
             }
         }
 
@@ -108,14 +156,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var result = await _carService.GetCarSpecs(carId);
-                if (result == null)
-                    return NotFound("Car specifications not found.");
 
-                return Ok(result);
+                if (result == null)
+                {
+                    return NotFound(new
+                    {
+                        message = "Car specifications not found."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Car specifications retrieved successfully",
+                    data = result
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving car specifications",
+                    details = ex.Message
+                });
             }
         }
 
@@ -127,14 +189,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var result = await _carService.GetCarAveragePrice(carId);
-                if (result == null)
-                    return NotFound();
 
-                return Ok(result);
+                if (result == null)
+                {
+                    return NotFound(new
+                    {
+                        message = "Average price not found for this car."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Average price retrieved successfully",
+                    data = result
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving average price",
+                    details = ex.Message
+                });
             }
         }
 
@@ -147,14 +223,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var result = await _carService.GetCarPerformanceScore(carId);
-                if (result == null)
-                    return NotFound();
 
-                return Ok(result);
+                if (result == null)
+                {
+                    return NotFound(new
+                    {
+                        message = "Performance score not found for this car."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Performance score retrieved successfully",
+                    data = result
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving performance score",
+                    details = ex.Message
+                });
             }
         }
 
@@ -166,11 +256,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var carsForSale = await _carService.GetCarsForSale();
-                return Ok(carsForSale);
+
+                if (carsForSale == null || !carsForSale.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "No cars available for sale."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Cars for sale retrieved successfully",
+                    data = carsForSale
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving cars for sale",
+                    details = ex.Message
+                });
             }
         }
 
@@ -183,11 +290,32 @@ namespace Car_Picker_API.Controllers
             try
             {
                 bool isAvailable = await _carService.CheckCarAvailability(request.CarId, request.StartDate, request.EndDate);
-                return Ok(new { CarId = request.CarId, IsAvailable = isAvailable });
+
+                return Ok(new
+                {
+                    message = "Availability checked successfully",
+                    data = new
+                    {
+                        CarId = request.CarId,
+                        IsAvailable = isAvailable
+                    }
+                });
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return BadRequest(new
+                {
+                    message = "Invalid input",
+                    details = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "Error checking car availability",
+                    details = ex.Message
+                });
             }
         }
 
@@ -206,7 +334,11 @@ namespace Car_Picker_API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    message = "Error filtering cars",
+                    details = ex.Message
+                });
             }
         }
 
@@ -218,11 +350,28 @@ namespace Car_Picker_API.Controllers
             try
             {
                 var cars = await _carService.GetCarsForRent();
-                return Ok(cars);
+
+                if (cars == null || !cars.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "No cars available for rent."
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Cars for rent retrieved successfully",
+                    data = cars
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    message = "Error retrieving cars for rent",
+                    details = ex.Message
+                });
             }
         }
 

@@ -14,8 +14,6 @@ namespace CarPicker_API.Context
         public DbSet<CarImage> CarImages { get; set; } // Table for Car Images
         public DbSet<CarReview> CarReviews { get; set; } // Table for Car Reviews
         public DbSet<CarSpecs> CarSpecs { get; set; } // Table for Car Specifications
-        public DbSet<LookupItem> LookupItems { get; set; } // Table for Lookup Items
-        public DbSet<LookupType> LookupTypes { get; set; } // Table for Lookup Types
         public DbSet<Office> Offices { get; set; } // Table for Offices
         public DbSet<OfficeReview> OfficeReviews { get; set; } // Table for Office Reviews
         public DbSet<OfficeImage> OfficeImages { get; set; } // Table for Office Images
