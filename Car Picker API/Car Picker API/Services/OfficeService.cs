@@ -46,9 +46,13 @@ namespace Car_Picker_API.Services
                 {
                     Id = o.Id,
                     OfficeName = o.OfficeName,
+<<<<<<< Updated upstream
                     OfficeAddress = o.OfficeAddress,
                     OfficePhoneNumber = o.OfficePhoneNumber,
                     OfficeDescription = o.OfficeDescription,
+=======
+
+>>>>>>> Stashed changes
                     ReservationsCount = o.ReservationsCount,
                     OfficeCategory = o.OfficeCategory.ToString(),
                     OfficeImageUrl = o.OfficeImageUrl
@@ -79,4 +83,5 @@ namespace Car_Picker_API.Services
     }
 
 
+    }
 }
